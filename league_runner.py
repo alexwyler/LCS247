@@ -87,9 +87,18 @@ def test():
 #         print( stack.index(0) )
 #     pass
     
+    pass
+
+
+def test2():
+    
+    
+    
+    pass
+    
     
 
 # main()
 # time.sleep(5)# end()
 os_specific_init()
-test();
+test2();

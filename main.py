@@ -11,6 +11,7 @@ import subprocess
 import time
 import os
 import threading
+from test.test_pyexpat import PositionTest
 
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
@@ -46,12 +47,15 @@ def main():
             if platform.system() != 'Darwin':
                 game_thread = threading.Thread( target=open_game_pc, args = (spectate_info,) )
                 game_thread.start()
+                team, position = get_player_position( account, get_active_game(account))
+                team_str = str(team).join(str(team).split()).lower()
+                print("Is on team 1 " + str(team_str) )
+                print("Position " + str(position) )
+                startAutohotkey( team, position )
             else:
                 process = open_game_mac(spectate_info)
             
-            running_game_info = get_active_game(account)
-            while running_game_info:
-                print( get_player_position( account, running_game_info ) )
+            while get_active_game(account):
                 time.sleep(IN_GAME_PING_FREQUENCY)
             
             print("Game complete. Waiting for specator delay")
@@ -67,7 +71,6 @@ def main():
             print("No active games!")
     
     pass
-
 
 def get_player_position( account, running_game_info ):
     team_1 = running_game_info['game']['teamOne']['array']
@@ -90,6 +93,19 @@ def find_player_by_name( name, team_1, team_2 ):
             return False, index
         index += 1
     pass
+
+
+'''player locator
+'''
+def startAutohotkey( is_team_1, index):
+    
+    
+    subprocess.call([r"C:\Program Files (x86)\AutoHotkey\AutoHotkey.exe",
+                     r"C:\Users\Aleesa\Documents\GitHub\LCS247\Autohotkey\SpectatorHelper.ahk",
+                     str(is_team_1),
+                     str(index)])
+    pass
+
             
 '''
 OS Specific ways of killing shit

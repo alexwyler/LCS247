@@ -7,6 +7,9 @@ import collections
 
 PLAYERS = collections.OrderedDict()
 
+
+PLAYERS['Annie Bot'] = ['anniebot']
+PLAYERS['Dexter'] = ['dexter', 'GoldPoro2', 'LDdexter', 'OPOP174AMHA195', 'CIJL963PFPA447B', 'CLGsavior', 'CHIMPERATOR']
 PLAYERS['PorpoisePops'] = ['PorpoisePops', 'vVv PorpoisePops']
 PLAYERS['Slooshi'] = ['Slooshi', 'aL Slooshi', 'Slooshi8']
 PLAYERS['frommaplestreet'] = ['frommaplestreet', 'Velocity Maple']
@@ -30,7 +33,6 @@ PLAYERS['KiWiKiD'] = ['KiWiKiD', 'Snazero8', 'TheShyOne', 'KiwiKid', 'd KiWiKid'
 PLAYERS['Innox'] = ['Innox']
 PLAYERS['Helios'] = ['Helios', 'QBR9WQFWE0']
 PLAYERS['Seraph'] = ['Seraph', 'anik']
-PLAYERS['Dexter'] = ['dexter', 'GoldPoro2', 'LDdexter', 'OPOP174AMHA195', 'CIJL963PFPA447B', 'CLGsavior', 'CHIMPERATOR']
 PLAYERS['LiNk'] = ['LiNk', 'LiNk115', 'scarra115', 'MidLink', 'linkkk', 'kTLink', 'kTZelda', 'CLGzelda']
 PLAYERS['Quas'] = ['Quas', 'Crs Quas', 'gg Quas', 'nwe Quas', 'Dr Quas', 'Quasmire']
 PLAYERS['Cop'] = ['Cop', 'Crs Cop', 'v8 Cop', 'EU Cop', 'Entheomancer', 'David Roberson', 'KingWill84', 'crs goompa', 'bootybutts66']
@@ -41,6 +43,5 @@ PLAYERS['TheOddOne'] = ['theoddone']
 PLAYERS['SexyCan'] = ['sexycan']
 PLAYERS['Tossum'] = ['tossum']
 PLAYERS['Much Glorf Wow'] = ['muchglorfwow']
-PLAYERS['Annie Bot'] = ['anniebot']
 PLAYERS['Bwas'] = ['bwas']
 PLAYERS['LattMan'] = ['lattman']
