@@ -16,6 +16,8 @@ RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
 RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/na"
 
+GAME_TYPES = ['RANKED_SOLO_5x5']
+
 MAC_LOL_VERSION = "0.0.0.133"
 MAC_LOL_CLIENT_VERSION = "0.0.0.144"
 
@@ -109,7 +111,7 @@ def get_next_game():
         for summoner in players.PLAYERS[player]:
             try:
                 next_game = get_active_game(summoner)
-                if next_game:
+                if next_game and next_game['game']['queueTypeName'] in GAME_TYPES:
                     return (player, summoner, next_game)
             except Exception as e:
                 print('For '  + safe_str(summoner) + ': ', e)
