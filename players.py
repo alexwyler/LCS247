@@ -8,11 +8,17 @@ import collections
 PLAYERS = collections.OrderedDict()
 
 #EG
+PLAYERS['Pobelter'] = ['Pobelter', 'intero', 'imPobelter', 'Crs Pobelt', 'xPobelter', 'Crs Pobelter', 'Apdo Dog1', 'Wizikx']
 PLAYERS['Innox'] = ['Innox']
 PLAYERS['Helios'] = ['Helios', 'QBR9WQFWE0']
-PLAYERS['Pobelter'] = ['Pobelter', 'intero', 'imPobelter', 'Crs Pobelt', 'xPobelter', 'Crs Pobelter', 'Apdo Dog1', 'Wizikx']
 PLAYERS['Altec'] = ['Altec', 'xiaomx', 'AItecX', 'illustic', 'Crs Altec', 'scarraru', 'AItecRu', 'AltecX', 'C9 Altec']
 PLAYERS['Krepo'] = ['Kreported', 'CLG SkumbagKrepo', 'Busdriver', 'MockingBeard', 'CLG SkumbagKrepo']
+
+#T8
+PLAYERS['PorpoisePops'] = ['PorpoisePops', 'vVv PorpoisePops']
+PLAYERS['Slooshi'] = ['Slooshi', 'aL Slooshi', 'Slooshi8']
+PLAYERS['frommaplestreet'] = ['frommaplestreet', 'Velocity Maple']
+PLAYERS['Dodo8'] = ['Dodo8']
 
 #Dignitas
 PLAYERS['ZionSpartan'] = ['ZionSpartan'];

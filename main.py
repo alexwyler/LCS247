@@ -42,15 +42,16 @@ def main():
             else:
                 process = open_game_mac(spectate_info)
                 
+                
             while get_active_game(account):
                 print("Game still in progress.  Waiting 30 seconds...")
                 time.sleep(30)
                 
             print("Killing game")
             if platform.system() != 'Darwin':
-                process = kill_game_mac(process)
-            else:
                 process = kill_game_pc(process)
+            else:
+                process = kill_game_mac(process)
 
         else:
             print("No active games!")
@@ -59,7 +60,7 @@ def main():
 OS Specific ways of killing shit
 '''
 def kill_game_mac(process):
-    process.kill()
+    os.system("killall -9 LeagueofLegends");
     pass
 
 def kill_game_pc(process):
