@@ -35,8 +35,7 @@ def main():
                 
             process.kill()
         else:
-            print("No active games.  Waiting 10 seconds...")
-            time.sleep(10)
+            print("No active games! Continuing to search...")
         
 '''
 Opens game on mac given the spectate_info and returns a handle on the process
