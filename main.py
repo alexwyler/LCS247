@@ -43,14 +43,14 @@ def main():
         if game_info:
             spectate_info = game_info['playerCredentials'];   
             print(player, account, spectate_info)
+            team, position = get_player_position(account, game_info)
+            team_str = str(team).join(str(team).split()).lower()
+            print("Is on team 1 " + str(team_str) )
+            print("Position " + str(position) )
 
             if platform.system() != 'Darwin':
                 game_thread = threading.Thread( target=open_game_pc, args = (spectate_info,) )
                 game_thread.start()
-                team, position = get_player_position( account, get_active_game(account))
-                team_str = str(team).join(str(team).split()).lower()
-                print("Is on team 1 " + str(team_str) )
-                print("Position " + str(position) )
                 startAutohotkey( team, position )
             else:
                 process = open_game_mac(spectate_info)
@@ -80,7 +80,7 @@ def get_player_position( account, running_game_info ):
             
 #returns is found on team 1 and position
 def find_player_by_name( name, team_1, team_2 ):
-    internal_name = name.join(name.split()).lower()
+    internal_name = name.replace(" ", "").lower()
     index = 0
     for player in team_1:
         if player['summonerInternalName'] == internal_name:
@@ -93,7 +93,6 @@ def find_player_by_name( name, team_1, team_2 ):
             return False, index
         index += 1
     pass
-
 
 '''player locator
 '''

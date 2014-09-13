@@ -7,7 +7,7 @@ import collections
 
 PLAYERS = collections.OrderedDict()
 
-
+PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
 PLAYERS['Annie Bot'] = ['anniebot']
 PLAYERS['Dexter'] = ['dexter', 'GoldPoro2', 'LDdexter', 'OPOP174AMHA195', 'CIJL963PFPA447B', 'CLGsavior', 'CHIMPERATOR']
 PLAYERS['PorpoisePops'] = ['PorpoisePops', 'vVv PorpoisePops']
@@ -26,7 +26,6 @@ PLAYERS['Hai'] = ['hai', 'C9 HyperX Diego', 'C9 Hai', 'AndrossiBaam', 'C9 Hairo'
 PLAYERS['Meteos'] = ['Meteos', 'C10 Meteos', 'C9 Meteos', 'Short Dog', 'Long Dong', 'C9 Axel']
 PLAYERS['Sneaky'] = ['Sneaky', 'C9 StealthBomber', 'C9 Sneaky', 'd SnEaKyCaStRo', 'SnEaKyCaStRoO', 'Pulse CaStRo', 'Heathers Suka', 'AL SnEaKyCaStRo']
 PLAYERS['LemonNation'] = ['LemonNation', 'C9 BananaNation', 'C9 HyperX Dora', 'C9 LemonNation', 'Nom Nom Lemon', 'Quantic Lemon NT', 'oRb LemonNation', 'ShawnOfTheDead', 'LemonBoy']
-PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
 PLAYERS['Krepo'] = ['Kreported', 'CLG SkumbagKrepo', 'Busdriver', 'MockingBeard', 'CLG SkumbagKrepo']
 PLAYERS['Crumbz'] = ['Crumbz', 'd Crumbz', 'Crumblina', 'SiAseeTnoAevilN', 'Phd Mundo', 'Sin Pact', 'Prof Crumbledore']
 PLAYERS['KiWiKiD'] = ['KiWiKiD', 'Snazero8', 'TheShyOne', 'KiwiKid', 'd KiWiKid', 'WORST BOWLHAVIOR']
