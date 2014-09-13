@@ -7,6 +7,8 @@ import collections
 
 PLAYERS = collections.OrderedDict()
 
+PLAYERS['Chaox'] = ['Chaox']
+
 #Dignitas
 PLAYERS['Imaqtpie'] = ['Imaqtpie', 'qtpie', 'looking2sub4lcs', 'Zstinkloser430Z', 'LMQ Tc Tabe', 'Jessica Lynn', 'adsafadfdsafdasf']
 PLAYERS['ZionSpartan'] = ['ZionSpartan'];

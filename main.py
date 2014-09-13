@@ -21,6 +21,9 @@ MAC_LOL_CLIENT_VERSION = "0.0.0.144"
 PC_LOL_VERSION = "0.0.1.54"
 PC_LOL_CLIENT_VERSION = "0.0.1.54"
 
+IN_GAME_PING_FREQUENCY = 10
+SPECTATOR_DELAY = 3 * 60
+
 def os_specific_init():
     if platform.system() != 'Darwin':
         os.chdir(r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.54\deploy")
@@ -42,14 +45,13 @@ def main():
             else:
                 process = open_game_mac(spectate_info)
                 
-                
             while get_active_game(account):
-                print("Game still in progress.  Waiting 30 seconds...")
-                time.sleep(30)
-
-            time.sleep(15);
-                
-            print("Killing game")
+                time.sleep(IN_GAME_PING_FREQUENCY)
+            
+            print("Game complete. Waiting for specator delay")
+            time.sleep(SPECTATOR_DELAY)
+            
+            print("Killing game..")
             if platform.system() != 'Darwin':
                 process = kill_game_pc(process)
             else:
