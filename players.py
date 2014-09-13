@@ -7,8 +7,8 @@ import collections
 
 PLAYERS = collections.OrderedDict()
 
+
 PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
-PLAYERS['Annie Bot'] = ['anniebot']
 PLAYERS['Dexter'] = ['dexter', 'GoldPoro2', 'LDdexter', 'OPOP174AMHA195', 'CIJL963PFPA447B', 'CLGsavior', 'CHIMPERATOR']
 PLAYERS['PorpoisePops'] = ['PorpoisePops', 'vVv PorpoisePops']
 PLAYERS['Slooshi'] = ['Slooshi', 'aL Slooshi', 'Slooshi8']
@@ -34,9 +34,12 @@ PLAYERS['Helios'] = ['Helios', 'QBR9WQFWE0']
 PLAYERS['Seraph'] = ['Seraph', 'anik']
 PLAYERS['LiNk'] = ['LiNk', 'LiNk115', 'scarra115', 'MidLink', 'linkkk', 'kTLink', 'kTZelda', 'CLGzelda']
 PLAYERS['Quas'] = ['Quas', 'Crs Quas', 'gg Quas', 'nwe Quas', 'Dr Quas', 'Quasmire']
-PLAYERS['Cop'] = ['Cop', 'Crs Cop', 'v8 Cop', 'EU Cop', 'Entheomancer', 'David Roberson', 'KingWill84', 'crs goompa', 'bootybutts66']
+PLAYERS['Cop'] = ['Cop', 'Crs Cop', 'v8 Cop', 'EU Cop', 'David Roberson', 'KingWill84', 'crs goompa', 'bootybutts66']
 PLAYERS['XPecial'] = ['Xpecial', 'TSM Xpec']
 
+
+PLAYERS['DaBox'] = ['dabox']
+PLAYERS['Annie Bot'] = ['anniebot']
 PLAYERS['Hi Im Gosu'] = ['hi im gosu']
 PLAYERS['TheOddOne'] = ['theoddone']
 PLAYERS['SexyCan'] = ['sexycan']

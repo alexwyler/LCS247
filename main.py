@@ -49,13 +49,19 @@ def main():
             print("Position " + str(position) )
 
             if platform.system() != 'Darwin':
+                os.system( r'taskkill /F /IM "League of Legends.exe"' );
                 game_thread = threading.Thread( target=open_game_pc, args = (spectate_info,) )
                 game_thread.start()
-                startAutohotkey( team, position )
+                team, position = get_player_position( account, get_active_game(account))
+                team_str = stripSpaceAndLower(str(team))
+                print( "Position found: " + team_str + ", " + str(position) )
+                ahk_thread = threading.Thread( target=startAutohotkey, args = (team,position,) )
+                ahk_thread.start()
             else:
                 process = open_game_mac(spectate_info)
             
             while get_active_game(account):
+                print("Checking game status...")
                 time.sleep(IN_GAME_PING_FREQUENCY)
             
             print("Game complete. Waiting for specator delay")
@@ -80,7 +86,7 @@ def get_player_position( account, running_game_info ):
             
 #returns is found on team 1 and position
 def find_player_by_name( name, team_1, team_2 ):
-    internal_name = name.replace(" ", "").lower()
+    internal_name = stripSpaceAndLower(name)
     index = 0
     for player in team_1:
         if player['summonerInternalName'] == internal_name:
@@ -94,10 +100,13 @@ def find_player_by_name( name, team_1, team_2 ):
         index += 1
     pass
 
+def stripSpaceAndLower( raw ):
+    return raw.replace(" ", "").lower()
+
+
 '''player locator
 '''
 def startAutohotkey( is_team_1, index):
-    
     
     subprocess.call([r"C:\Program Files (x86)\AutoHotkey\AutoHotkey.exe",
                      r"C:\Users\Aleesa\Documents\GitHub\LCS247\Autohotkey\SpectatorHelper.ahk",

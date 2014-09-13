@@ -37,8 +37,8 @@
 	
 	;msgbox out of spectating
 	
-	;5 second wait
-	Sleep 2000
+	;small wait
+	Sleep 1000
 
 	index = %2%
 	if 1 contains true
