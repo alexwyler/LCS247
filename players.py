@@ -7,6 +7,13 @@ import collections
 
 PLAYERS = collections.OrderedDict()
 
+#Dignitas
+PLAYERS['Imaqtpie'] = ['Imaqtpie', 'qtpie', 'looking2sub4lcs', 'Zstinkloser430Z', 'LMQ Tc Tabe', 'Jessica Lynn', 'adsafadfdsafdasf']
+PLAYERS['ZionSpartan'] = ['ZionSpartan'];
+PLAYERS['Crumbz'] = ['Crumbz', 'd Crumbz', 'Crumblina', 'SiAseeTnoAevilN', 'Phd Mundo', 'Sin Pact', 'Prof Crumbledore']
+PLAYERS['Shiptur'] = ['Shiphtur', 'mMe Shiphtur', 'Chapanya', 'CST Shiponya', 'Pawn Dog', 'Apdo Dog']
+PLAYERS['KiWiKiD'] = ['KiWiKiD', 'Snazero8', 'TheShyOne', 'KiwiKid', 'd KiWiKid', 'WORST BOWLHAVIOR']
+
 #EG
 PLAYERS['Pobelter'] = ['Pobelter', 'intero', 'imPobelter', 'Crs Pobelt', 'xPobelter', 'Crs Pobelter', 'Apdo Dog1', 'Wizikx']
 PLAYERS['Innox'] = ['Innox']
@@ -19,13 +26,6 @@ PLAYERS['PorpoisePops'] = ['PorpoisePops', 'vVv PorpoisePops']
 PLAYERS['Slooshi'] = ['Slooshi', 'aL Slooshi', 'Slooshi8']
 PLAYERS['frommaplestreet'] = ['frommaplestreet', 'Velocity Maple']
 PLAYERS['Dodo8'] = ['Dodo8']
-
-#Dignitas
-PLAYERS['ZionSpartan'] = ['ZionSpartan'];
-PLAYERS['Crumbz'] = ['Crumbz', 'd Crumbz', 'Crumblina', 'SiAseeTnoAevilN', 'Phd Mundo', 'Sin Pact', 'Prof Crumbledore']
-PLAYERS['Shiptur'] = ['Shiphtur', 'mMe Shiphtur', 'Chapanya', 'CST Shiponya', 'Pawn Dog', 'Apdo Dog']
-PLAYERS['Imaqtpie'] = ['Imaqtpie', 'qtpie', 'looking2sub4lcs', 'Zstinkloser430Z', 'LMQ Tc Tabe', 'Jessica Lynn', 'adsafadfdsafdasf']
-PLAYERS['KiWiKiD'] = ['KiWiKiD', 'Snazero8', 'TheShyOne', 'KiwiKid', 'd KiWiKid', 'WORST BOWLHAVIOR']
 
 # CLG
 PLAYERS['Seraph'] = ['Seraph', 'anik']
