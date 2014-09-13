@@ -12,11 +12,20 @@ MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/N
 RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/na"
 
 def main():
-    
+    (player, account, game_info) = get_next_game()
+    print(player, account, game_info['playerCredentials'])
+
+'''
+Returns tuple of (player, account, game_info) for the most popular current game
+'''
+def get_next_game():
     for player in players.PLAYERS:
-        print(player)
         for summoner in players.PLAYERS[player]:
-            print(get_active_game(summoner))
+            next_game = get_active_game(summoner)
+            if next_game:
+                return (player, summoner, next_game)
+    return None
+            
 
 def authenticate_mashape_request(req):
     req.add_header("X-Mashape-Key", "RQk9vZZLGQmshgjK5Yg8nsx5rz4Ep1SJ5I5jsneUxclaP4OTJR")
@@ -26,7 +35,7 @@ def get_active_game(summoner_name):
     req = request.Request(MASHAPE_BASE_URL + "/summoner/retrieveInProgressSpectatorGameInfo/{0}".format(summoner_name))
     authenticate_mashape_request(req)
     game_info = get_json(req)
-    return game_info['playerCredentials'] if not game_info.get('error') else None
+    return game_info if not game_info.get('error') else None
 
 def get_summoner_id(summoner):
     data = get_json(build_api_url("/v1.4/summoner/by-name/" + summoner))
