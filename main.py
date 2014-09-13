@@ -4,6 +4,7 @@ Created on Sep 12, 2014
 @author: alexwyler
 '''
 from urllib import parse, request
+import os
 import players
 import json
 import platform
@@ -14,14 +15,26 @@ import os
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
 RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/na"
+
 MAC_LOL_VERSION = "0.0.0.133"
 MAC_LOL_CLIENT_VERSION = "0.0.0.144"
 
+PC_LOL_VERSION = "0.0.1.54"
+PC_LOL_CLIENT_VERSION = "0.0.1.54"
+
+def os_specific_init():
+    if platform.system() != 'Darwin':
+        os.chdir(r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.54\deploy")
+    pass;
+
 def main():
+    
+    os_specific_init()
     
     while True:
         print("Searching for next game...")
         player, account, game_info = get_next_game()
+        
         if game_info:
             spectate_info = game_info['playerCredentials'];   
             print(player, account, spectate_info)
@@ -31,11 +44,15 @@ def main():
             else:
                 process = open_game_mac(spectate_info)
                 
-            while get_active_game(account):
-                print("Game still in progress.  Waiting 30 seconds...")
-                time.sleep(30)
-                
-            process.kill()
+#             while get_active_game(account):
+#                 print("Game still in progress.  Waiting 30 seconds...")
+#                 time.sleep(30)
+
+            time.sleep(10)
+            print("killing process")
+            os.system( r'taskkill /F /IM "League of Legends.exe"' )
+            
+#             process.kill()
         else:
             print("No active games! Continuing to search...")
         
@@ -55,8 +72,16 @@ def open_game_mac(spectate_info):
     return subprocess.Popen(full_cmd, stderr = devnull)
 
 def open_game_pc(spectate_info):
-    return None
-    pass
+    ip_and_port = str(spectate_info['observerServerIp']) + ':' + str(spectate_info['observerServerPort'])
+    encryption_key = spectate_info['observerEncryptionKey']
+    game_id = spectate_info['gameId']
+    server = "NA1"
+    
+    return subprocess.call([r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\{0}\deploy\League of Legends.exe".format(PC_LOL_VERSION),
+                "8394",
+                "LoLLauncher.exe",
+                "",
+                "spectator {0} {1} {2} {3}".format( ip_and_port, encryption_key, game_id, server )])
     
 '''
 Returns tuple of (player, account, game_info) for the most popular current game

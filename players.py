@@ -34,3 +34,7 @@ PLAYERS['TheOddOne'] = ['theoddone']
 PLAYERS['SexyCan'] = ['sexycan']
 PLAYERS['Tossum'] = ['tossum']
 PLAYERS['Much Glorf Wow'] = ['muchglorfwow']
+
+# Random masters
+PLAYERS['Annie Bot'] = ['anniebot']
+PLAYERS['Bwas'] = ['bwas']

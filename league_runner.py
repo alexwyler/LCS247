@@ -9,37 +9,50 @@ RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/na/v1.4"
 '''
 
 import os
+import platform
 import shlex
+from subprocess import check_call
 import subprocess
 import time
 from tkinter.tix import Shell
 from urllib import parse, request
 
 
-LAUNCHER_PATH = "C:\\Riot Games\\League of Legends\\lol.launcher.exe"
-LAUNCHER_PATH2 = '"start "" /D "C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.54\deploy" "League of Legends.exe" "8394" "LoLLauncher.exe" "" "spectator 216.133.234.17:8088 xVMNoFp3dgt9TnhJFZtnhZTKtVqQVQes 1538864923 NA1""'
-# "8394" "LoLLauncher.exe" "" "spectator spectator.na.lol.riotgames.com:8088 5GHjwNvZajaYWIjCtxTX+xEofQhMNObY 1538820789 NA1"
-
-LAUNCHER_BASE = "C:\\Riot Games\\League of Legends\\RADS\\solutions\\lol_game_client_sln\\releases\\0.0.1.54\\deploy\\League of Legends.exe"
-PROCESS_NAME = "League of legends.exe"
 
 
+PC_LOL_VERSION = "0.0.1.54"
+PC_LOL_CLIENT_VERSION = "0.0.1.54"
 
-def main():
-    print("swag")
-    subprocess.call([r""+LAUNCHER_PATH + " \"8394\" \"LoLLauncher.exe\" \"\" \"spectator spectator.na.lol.riotgames.com:8088 5GHjwNvZajaYWIjCtxTX+xEofQhMNObY 1538820789 NA1\""])
-    pass
+
 
 def end():
     print("swag2")
     os.system( r'taskkill /F /IM "League of legends.exe"' )
     pass
 
-def startLeague():
-    subprocess.call( LAUNCHER_PATH2  )
-    pass
+def os_specific_init():
+    if platform.system() != 'Darwin':
+        os.chdir( r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\{0}\deploy".format(PC_LOL_CLIENT_VERSION) )
+    pass;
+
+# def startLeague():
+#     
+#     ip_and_port = str(spectate_info['observerServerIp']) + ':' + str(spectate_info['observerServerPort'])
+#     encryption_key = spectate_info['observerEncryptionKey']
+#     game_id = spectate_info['gameId']
+#     server = "NA1"
+#     
+#     subprocess.call([r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\{0}\deploy\League of Legends.exe".format(PC_LOL_VERSION),
+#                 "8394",
+#                 "LoLLauncher.exe",
+#                 "",
+#                 "spectator {0} {1} {2} {3}".format( ip_and_port, encryption_key, game_id, server )])
+# 
+#     
+#     pass
     
 
 # main()
 # time.sleep(5)# end()
-startLeague()
+os_specific_init()
+end();
