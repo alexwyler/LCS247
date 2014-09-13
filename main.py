@@ -47,12 +47,29 @@ def main():
             while get_active_game(account):
                 print("Game still in progress.  Waiting 30 seconds...")
                 time.sleep(30)
+                
+            if platform.system() != 'Darwin':
+                process = kill_game_mac(process)
+            else:
+                process = kill_game_pc(process)
+            print("Killing game")
 
-            os.system( r'taskkill /F /IM "League of Legends.exe"' )
-            process.kill()
         else:
             print("No active games! Continuing to search...")
-        
+            
+            
+'''
+OS Specific ways of killing shit
+'''
+def kill_game_mac(process):
+    process.kill()
+    
+    pass
+
+def kill_game_pc(process):
+    os.system( r'taskkill /F /IM "League of Legends.exe"' );
+
+    pass
 '''
 Opens game on mac given the spectate_info and returns a handle on the process
 '''
