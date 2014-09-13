@@ -44,15 +44,12 @@ def main():
             else:
                 process = open_game_mac(spectate_info)
                 
-#             while get_active_game(account):
-#                 print("Game still in progress.  Waiting 30 seconds...")
-#                 time.sleep(30)
+            while get_active_game(account):
+                print("Game still in progress.  Waiting 30 seconds...")
+                time.sleep(30)
 
-            time.sleep(10)
-            print("killing process")
             os.system( r'taskkill /F /IM "League of Legends.exe"' )
-            
-#             process.kill()
+            process.kill()
         else:
             print("No active games! Continuing to search...")
         
