@@ -48,8 +48,10 @@ def main():
                 game_thread.start()
             else:
                 process = open_game_mac(spectate_info)
-                
-            while get_active_game(account):
+            
+            running_game_info = get_active_game(account)
+            while running_game_info:
+                print( get_player_position( account, running_game_info ) )
                 time.sleep(IN_GAME_PING_FREQUENCY)
             
             print("Game complete. Waiting for specator delay")
@@ -63,6 +65,31 @@ def main():
 
         else:
             print("No active games!")
+    
+    pass
+
+
+def get_player_position( account, running_game_info ):
+    team_1 = running_game_info['game']['teamOne']['array']
+    team_2 = running_game_info['game']['teamTwo']['array']
+    return find_player_by_name( account, team_1, team_2 )
+
+            
+#returns is found on team 1 and position
+def find_player_by_name( name, team_1, team_2 ):
+    internal_name = name.join(name.split()).lower()
+    index = 0
+    for player in team_1:
+        if player['summonerInternalName'] == internal_name:
+            return True, index
+        index += 1
+    
+    index = 0
+    for player in team_2:
+        if player['summonerInternalName'] == internal_name:
+            return False, index
+        index += 1
+    pass
             
 '''
 OS Specific ways of killing shit
