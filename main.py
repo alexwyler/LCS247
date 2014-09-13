@@ -45,17 +45,12 @@ def main():
             print(player, account, spectate_info)
             team, position = get_player_position(account, game_info)
             team_str = str(team).join(str(team).split()).lower()
-            print("Is on team 1 " + str(team_str) )
-            print("Position " + str(position) )
+            print( "Position found: " + team_str + ", " + str(position) )
 
             if platform.system() != 'Darwin':
-                os.system( r'taskkill /F /IM "League of Legends.exe"' );
                 game_thread = threading.Thread( target=open_game_pc, args = (spectate_info,) )
                 game_thread.start()
-                team, position = get_player_position( account, get_active_game(account))
-                team_str = stripSpaceAndLower(str(team))
-                print( "Position found: " + team_str + ", " + str(position) )
-                ahk_thread = threading.Thread( target=startAutohotkey, args = (team,position,) )
+                ahk_thread = threading.Thread( target=startAutohotkey, args = (team_str,str(position),) )
                 ahk_thread.start()
             else:
                 process = open_game_mac(spectate_info)
@@ -110,8 +105,8 @@ def startAutohotkey( is_team_1, index):
     
     subprocess.call([r"C:\Program Files (x86)\AutoHotkey\AutoHotkey.exe",
                      r"C:\Users\Aleesa\Documents\GitHub\LCS247\Autohotkey\SpectatorHelper.ahk",
-                     str(is_team_1),
-                     str(index)])
+                     is_team_1,
+                     index])
     pass
 
             

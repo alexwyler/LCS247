@@ -16,9 +16,9 @@
 ;#IfWinExist, League of Legends (TM) Client
 
 #Persistent
-#SingleInstance
+#SingleInstance force
 
-	;msgbox start %1% - %2%
+	msgbox start %1% - %2%
 	
 	while !isLeagueOpen()
 	{
