@@ -7,12 +7,19 @@ import collections
 
 PLAYERS = collections.OrderedDict()
 
-# Curse
-PLAYERS['Quas'] = ['Quas', 'Crs Quas', 'gg Quas', 'nwe Quas', 'Dr Quas', 'Quasmire']
-PLAYERS['IWillDominate'] = ['IWillDominate', 'd IWDominate', 'Dominate is High', 'RunsOnRice', 'CrazyPsychoMango', 'IlIlIlIIIIllIll']
-PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
-PLAYERS['Cop'] = ['Cop', 'Crs Cop', 'v8 Cop', 'EU Cop', 'Entheomancer', 'David Roberson', 'KingWill84', 'crs goompa', 'bootybutts66']
-PLAYERS['XPecial'] = ['Xpecial', 'TSM Xpec']
+#EG
+PLAYERS['Innox'] = ['Innox']
+PLAYERS['Helios'] = ['Helios', 'QBR9WQFWE0']
+PLAYERS['Pobelter'] = ['Pobelter', 'intero', 'imPobelter', 'Crs Pobelt', 'xPobelter', 'Crs Pobelter', 'Apdo Dog1', 'Wizikx']
+PLAYERS['Altec'] = ['Altec', 'xiaomx', 'AItecX', 'illustic', 'Crs Altec', 'scarraru', 'AItecRu', 'AltecX', 'C9 Altec']
+PLAYERS['Krepo'] = ['Kreported', 'CLG SkumbagKrepo', 'Busdriver', 'MockingBeard', 'CLG SkumbagKrepo']
+
+#Dignitas
+PLAYERS['ZionSpartan'] = ['ZionSpartan'];
+PLAYERS['Crumbz'] = ['Crumbz', 'd Crumbz', 'Crumblina', 'SiAseeTnoAevilN', 'Phd Mundo', 'Sin Pact', 'Prof Crumbledore']
+PLAYERS['Shiptur'] = ['Shiphtur', 'mMe Shiphtur', 'Chapanya', 'CST Shiponya', 'Pawn Dog', 'Apdo Dog']
+PLAYERS['Imaqtpie'] = ['Imaqtpie', 'qtpie', 'looking2sub4lcs', 'Zstinkloser430Z', 'LMQ Tc Tabe', 'Jessica Lynn', 'adsafadfdsafdasf']
+PLAYERS['KiWiKiD'] = ['KiWiKiD', 'Snazero8', 'TheShyOne', 'KiwiKid', 'd KiWiKid', 'WORST BOWLHAVIOR']
 
 # CLG
 PLAYERS['Seraph'] = ['Seraph', 'anik']
@@ -30,7 +37,7 @@ PLAYERS['LemonNation'] = ['LemonNation', 'C9 BananaNation', 'C9 HyperX Dora', 'C
 
 # Curse
 PLAYERS['Quas'] = ['Quas', 'Crs Quas', 'gg Quas', 'nwe Quas', 'Dr Quas', 'Quasmire']
-PLAYERS['IWillDominate'] = ['IWillDominate', 'Crs IWDomA�nate', 'IWDomA�nate', 'd IWDominate', 'Dominate is High', 'RunsOnRice', 'CrazyPsychoMango', 'IlIlIlIIIIllIll']
+PLAYERS['IWillDominate'] = ['IWillDominate', 'd IWDominate', 'Dominate is High', 'RunsOnRice', 'CrazyPsychoMango', 'IlIlIlIIIIllIll']
 PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
 PLAYERS['Cop'] = ['Cop', 'Crs Cop', 'v8 Cop', 'EU Cop', 'Entheomancer', 'David Roberson', 'KingWill84', 'crs goompa', 'bootybutts66']
 PLAYERS['XPecial'] = ['Xpecial', 'TSM Xpec']

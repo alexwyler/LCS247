@@ -27,7 +27,6 @@ def os_specific_init():
     pass;
 
 def main():
-    
     os_specific_init()
     
     while True:
@@ -106,7 +105,7 @@ def get_next_game():
                 if next_game:
                     return (player, summoner, next_game)
             except Exception as e:
-                print(e)
+                print('For '  + safe_str(summoner) + ': ', e)
     return (None, None, None)
             
 
@@ -115,7 +114,7 @@ def authenticate_mashape_request(req):
     return req
 
 def get_active_game(summoner_name):
-    req = request.Request(MASHAPE_BASE_URL + "/summoner/retrieveInProgressSpectatorGameInfo/{0}".format(summoner_name.replace(" ", "")))
+    req = request.Request(MASHAPE_BASE_URL + "/summoner/retrieveInProgressSpectatorGameInfo/{0}".format(safe_str(summoner_name).replace(" ", "")))
     authenticate_mashape_request(req)
     game_info = get_json(req)
     return game_info if not game_info.get('error') else None
@@ -126,6 +125,15 @@ def get_summoner_id(summoner):
 
 def get_json(url, encoding="utf-8"):
     return json.loads(request.urlopen(url).read().decode(encoding))
+
+def safe_str(string):
+    if isinstance(string, str):
+        return string
+    
+    try:
+        return str(string.encode('utf-8'))
+    except TypeError:
+        return str(string)
 
 def build_api_url(path, params=None):
     if not params:
