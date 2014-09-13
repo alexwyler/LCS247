@@ -4,7 +4,6 @@ Created on Sep 12, 2014
 @author: alexwyler
 '''
 from urllib import parse, request
-import os
 import players
 import json
 import platform
@@ -48,11 +47,11 @@ def main():
                 print("Game still in progress.  Waiting 30 seconds...")
                 time.sleep(30)
                 
+            print("Killing game")
             if platform.system() != 'Darwin':
                 process = kill_game_mac(process)
             else:
                 process = kill_game_pc(process)
-            print("Killing game")
 
         else:
             print("No active games!")
