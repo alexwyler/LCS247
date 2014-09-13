@@ -7,6 +7,13 @@ import collections
 
 PLAYERS = collections.OrderedDict()
 
+# Curse
+PLAYERS['Quas'] = ['Quas', 'Crs Quas', 'gg Quas', 'nwe Quas', 'Dr Quas', 'Quasmire']
+PLAYERS['IWillDominate'] = ['IWillDominate', 'd IWDominate', 'Dominate is High', 'RunsOnRice', 'CrazyPsychoMango', 'IlIlIlIIIIllIll']
+PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
+PLAYERS['Cop'] = ['Cop', 'Crs Cop', 'v8 Cop', 'EU Cop', 'Entheomancer', 'David Roberson', 'KingWill84', 'crs goompa', 'bootybutts66']
+PLAYERS['XPecial'] = ['Xpecial', 'TSM Xpec']
+
 # CLG
 PLAYERS['Seraph'] = ['Seraph', 'anik']
 PLAYERS['Dexter'] = ['dexter', 'GoldPoro2', 'LDdexter', 'OPOP174AMHA195', 'CIJL963PFPA447B', 'CLGsavior', 'CHIMPERATOR']
@@ -23,7 +30,7 @@ PLAYERS['LemonNation'] = ['LemonNation', 'C9 BananaNation', 'C9 HyperX Dora', 'C
 
 # Curse
 PLAYERS['Quas'] = ['Quas', 'Crs Quas', 'gg Quas', 'nwe Quas', 'Dr Quas', 'Quasmire']
-PLAYERS['IWillDominate'] = ['IWillDominate', 'Crs IWDomA­nate', 'IWDomA­nate', 'd IWDominate', 'Dominate is High', 'RunsOnRice', 'CrazyPsychoMango', 'IlIlIlIIIIllIll']
+PLAYERS['IWillDominate'] = ['IWillDominate', 'Crs IWDomAï¿½nate', 'IWDomAï¿½nate', 'd IWDominate', 'Dominate is High', 'RunsOnRice', 'CrazyPsychoMango', 'IlIlIlIIIIllIll']
 PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
 PLAYERS['Cop'] = ['Cop', 'Crs Cop', 'v8 Cop', 'EU Cop', 'Entheomancer', 'David Roberson', 'KingWill84', 'crs goompa', 'bootybutts66']
 PLAYERS['XPecial'] = ['Xpecial', 'TSM Xpec']

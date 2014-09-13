@@ -55,21 +55,19 @@ def main():
             print("Killing game")
 
         else:
-            print("No active games! Continuing to search...")
-            
+            print("No active games!")
             
 '''
 OS Specific ways of killing shit
 '''
 def kill_game_mac(process):
     process.kill()
-    
     pass
 
 def kill_game_pc(process):
     os.system( r'taskkill /F /IM "League of Legends.exe"' );
-
     pass
+
 '''
 Opens game on mac given the spectate_info and returns a handle on the process
 '''
@@ -102,12 +100,14 @@ Returns tuple of (player, account, game_info) for the most popular current game
 '''
 def get_next_game():
     for player in players.PLAYERS:
-        print("----- Player: " + player + " -----")
+        print("Player: " + player)
         for summoner in players.PLAYERS[player]:
-            print("Account: " + summoner)
-            next_game = get_active_game(summoner)
-            if next_game:
-                return (player, summoner, next_game)
+            try:
+                next_game = get_active_game(summoner)
+                if next_game:
+                    return (player, summoner, next_game)
+            except Exception as e:
+                print(e)
     return (None, None, None)
             
 
