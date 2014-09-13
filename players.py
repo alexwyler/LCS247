@@ -5,6 +5,7 @@ Created on Sep 12, 2014
 '''
 import collections
 
+
 PLAYERS = collections.OrderedDict()
 
 # CLG
