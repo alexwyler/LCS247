@@ -54,6 +54,8 @@ def open_game_mac(spectate_info):
     return subprocess.Popen(full_cmd)
 
 def open_game_pc(spectate_info):
+    return None
+    pass
     
 '''
 Returns tuple of (player, account, game_info) for the most popular current game
