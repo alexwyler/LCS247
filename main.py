@@ -9,6 +9,7 @@ import json
 import platform
 import subprocess
 import time
+import os
 
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
@@ -19,6 +20,7 @@ MAC_LOL_CLIENT_VERSION = "0.0.0.144"
 def main():
     
     while True:
+        print("Searching for next game...")
         player, account, game_info = get_next_game()
         if game_info:
             spectate_info = game_info['playerCredentials'];   
@@ -41,16 +43,16 @@ def main():
 Opens game on mac given the spectate_info and returns a handle on the process
 '''
 def open_game_mac(spectate_info):
+    devnull = open(os.devnull, "w")
     ip_and_port = str(spectate_info['observerServerIp']) + ':' + str(spectate_info['observerServerPort'])
     cmd = '''
     cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/{0}/deploy/LeagueOfLegends.app/Contents/MacOS/
     riot_launched=true "/Applications/League of Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/{0}/deploy/LeagueOfLegends.app/Contents/MacOS/LeagueofLegends" 8394 LoLLauncher "/Applications/League of Legends.app/Contents/LoL/RADS/projects/lol_air_client/releases/{1}/deploy/bin/LolClient" "spectator {2} {3} {4} {5}"
     '''.format(MAC_LOL_VERSION, MAC_LOL_CLIENT_VERSION, ip_and_port, spectate_info['observerEncryptionKey'], spectate_info['gameId'], 'NA1')
     
-    print(cmd)
     full_cmd = ["bash", "-c", cmd]
     
-    return subprocess.Popen(full_cmd)
+    return subprocess.Popen(full_cmd, stderr = devnull)
 
 def open_game_pc(spectate_info):
     return None
@@ -61,11 +63,13 @@ Returns tuple of (player, account, game_info) for the most popular current game
 '''
 def get_next_game():
     for player in players.PLAYERS:
+        print("----- Player: " + player + " -----")
         for summoner in players.PLAYERS[player]:
+            print("Account: " + summoner)
             next_game = get_active_game(summoner)
             if next_game:
                 return (player, summoner, next_game)
-    return (None, None, None, None)
+    return (None, None, None)
             
 
 def authenticate_mashape_request(req):
@@ -73,7 +77,7 @@ def authenticate_mashape_request(req):
     return req
 
 def get_active_game(summoner_name):
-    req = request.Request(MASHAPE_BASE_URL + "/summoner/retrieveInProgressSpectatorGameInfo/{0}".format(summoner_name))
+    req = request.Request(MASHAPE_BASE_URL + "/summoner/retrieveInProgressSpectatorGameInfo/{0}".format(summoner_name.replace(" ", "")))
     authenticate_mashape_request(req)
     game_info = get_json(req)
     return game_info if not game_info.get('error') else None
