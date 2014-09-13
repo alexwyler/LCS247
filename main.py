@@ -38,7 +38,7 @@ def main():
             print(player, account, spectate_info)
 
             if platform.system() != 'Darwin':
-                process = open_game_pc(spectate_info)
+                open_game_pc(spectate_info)
             else:
                 process = open_game_mac(spectate_info)
                 
@@ -46,6 +46,8 @@ def main():
             while get_active_game(account):
                 print("Game still in progress.  Waiting 30 seconds...")
                 time.sleep(30)
+
+            time.sleep(15);
                 
             print("Killing game")
             if platform.system() != 'Darwin':

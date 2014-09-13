@@ -43,7 +43,6 @@ PLAYERS['LemonNation'] = ['LemonNation', 'C9 BananaNation', 'C9 HyperX Dora', 'C
 
 # Curse
 PLAYERS['Quas'] = ['Quas', 'Crs Quas', 'gg Quas', 'nwe Quas', 'Dr Quas', 'Quasmire']
-PLAYERS['IWillDominate'] = ['IWillDominate', 'd IWDominate', 'Dominate is High', 'RunsOnRice', 'CrazyPsychoMango', 'IlIlIlIIIIllIll']
 PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
 PLAYERS['Cop'] = ['Cop', 'Crs Cop', 'v8 Cop', 'EU Cop', 'Entheomancer', 'David Roberson', 'KingWill84', 'crs goompa', 'bootybutts66']
 PLAYERS['XPecial'] = ['Xpecial', 'TSM Xpec']
@@ -58,3 +57,4 @@ PLAYERS['Much Glorf Wow'] = ['muchglorfwow']
 # Random masters
 PLAYERS['Annie Bot'] = ['anniebot']
 PLAYERS['Bwas'] = ['bwas']
+PLAYERS['LattMan'] = ['lattman']
