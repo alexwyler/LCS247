@@ -1,0 +1,18 @@
+000000.000|    7836.0000kb|   7836.0000kb added| ALWAYS| Logging started at 2014-09-12T23:50:13.178
+000000.002|    7852.0000kb|     16.0000kb added|  ERROR| Failed to find Rads dynamic library. This should have been made available by the patcher (Rads).
+000000.025|   34988.0000kb|  27136.0000kb added|   OKAY| Unable to process data overlay file ./ToolsConfig.xml, defaulting to overlay now
+000000.026|   34988.0000kb|      0.0000kb added| ALWAYS| Data overlay start folder initialized to DATA, Content/Src
+000000.026|   35244.0000kb|    256.0000kb added| ALWAYS| Global logging level set to   WARN
+000000.027|   35392.0000kb|    148.0000kb added| ALWAYS| Build Version: Version 4.16.0.238 (Sep  5 2014/17:28:15) [PUBLIC] <Releases/4.16> ChangeList: 705542
+000000.095|   38304.0000kb|   2912.0000kb added|  ERROR| Command line does not have correct number of parameters <0>
+000000.096|   38316.0000kb|     12.0000kb added|  ERROR| Assertion failed!
+
+File: C:/jenkins/workspace/game-code-Releases-4-16-public-win32/code/Game/LoL/UX/Font/Client/GameFontManager.cpp
+Line: 643
+
+Function: GameFontSystem::GameFontManager::GetInstance
+
+Expression: mInstance
+
+Description: GameFontManager::GetInstance: Instance not created yet or already destroyed.
+000000.274|   40552.0000kb|   2236.0000kb added|  ERROR| Crash Occurred
