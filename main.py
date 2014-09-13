@@ -10,6 +10,7 @@ import platform
 import subprocess
 import time
 import os
+import threading
 
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
@@ -41,7 +42,8 @@ def main():
             print(player, account, spectate_info)
 
             if platform.system() != 'Darwin':
-                open_game_pc(spectate_info)
+                game_thread = threading.Thread( target=open_game_pc, args = (spectate_info,) )
+                game_thread.start()
             else:
                 process = open_game_mac(spectate_info)
                 
@@ -53,9 +55,9 @@ def main():
             
             print("Killing game..")
             if platform.system() != 'Darwin':
-                process = kill_game_pc(process)
+                kill_game_pc()
             else:
-                process = kill_game_mac(process)
+                kill_game_mac(process)
 
         else:
             print("No active games!")
@@ -67,7 +69,7 @@ def kill_game_mac(process):
     os.system("killall -9 LeagueofLegends");
     pass
 
-def kill_game_pc(process):
+def kill_game_pc():
     os.system( r'taskkill /F /IM "League of Legends.exe"' );
     pass
 
