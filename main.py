@@ -24,7 +24,7 @@ def main():
             spectate_info = game_info['playerCredentials'];   
             print(player, account, spectate_info)
 
-            if platform.system() == 'Windows':
+            if platform.system() != 'Darwin':
                 process = open_game_pc(spectate_info)
             else:
                 process = open_game_mac(spectate_info)
