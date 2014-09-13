@@ -6,4 +6,6 @@ Created on Sep 12, 2014
 import collections
 
 PLAYERS = collections.OrderedDict()
-PLAYERS['TheOddOne'] = ['TheOddOne'];
+PLAYERS['TheOddOne'] = ['theoddone'];
+PLAYERS['SexyCan'] = ['sexycan'];
+PLAYERS['Hi Im Gosu'] = ['hiimgosu'] 

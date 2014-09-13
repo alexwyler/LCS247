@@ -5,16 +5,35 @@ Created on Sep 12, 2014
 '''
 from urllib import parse, request
 import players
+import json
 
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
-RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/na/v1.4"
+MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
+RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/na"
 
 def main():
     
     for player in players.PLAYERS:
+        print(player)
         for summoner in players.PLAYERS[player]:
-            print(request.urlopen(build_api_url("/summoner/by-name/" + summoner)).read())
+            print(get_active_game(summoner))
 
+def authenticate_mashape_request(req):
+    req.add_header("X-Mashape-Key", "RQk9vZZLGQmshgjK5Yg8nsx5rz4Ep1SJ5I5jsneUxclaP4OTJR")
+    return req
+
+def get_active_game(summoner_name):
+    req = request.Request(MASHAPE_BASE_URL + "/summoner/retrieveInProgressSpectatorGameInfo/{0}".format(summoner_name))
+    authenticate_mashape_request(req)
+    game_info = get_json(req)
+    return game_info['playerCredentials'] if not game_info.get('error') else None
+
+def get_summoner_id(summoner):
+    data = get_json(build_api_url("/v1.4/summoner/by-name/" + summoner))
+    return data[next(iter(data))]["id"]
+
+def get_json(url, encoding="utf-8"):
+    return json.loads(request.urlopen(url).read().decode(encoding))
 
 def build_api_url(path, params=None):
     if not params:
