@@ -20,6 +20,7 @@ newsmsg = 'No news set'
 MESSAGE_PATTERN = re.compile(':(.*)!(.*)@(.*).tmi.twitch.tv PRIVMSG #lcs247 :(.*)', re.IGNORECASE)
 
 HYPE_COMMAND = re.compile('hype (.*)')
+SHOW_PLAYERS = re.compile('show players')
     
 def init():
 
@@ -53,6 +54,10 @@ def init():
                         personality = players.get_personality(player)
                         message = "{0} hypes {1} to {2}!".format(user, personality['name'], personality['hype'])
                         send_message(message)
+                    
+                    show_m = SHOW_PLAYERS.match(message)
+                    if show_m:
+                        pass
 
             time.sleep(1)
 
