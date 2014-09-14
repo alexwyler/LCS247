@@ -35,7 +35,8 @@ def init():
             
             for line in temp:
                 print('CHAT DATA: ' + line)
-                time.sleep(1)
+            
+            time.sleep(1)
                  
     t = threading.Thread(target=process)
     t.start()

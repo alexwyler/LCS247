@@ -5,6 +5,7 @@ Created on Sep 12, 2014
 '''
 
 import main
+import players
 
 #Can format the name in any sort of way
 def get_champion_name_from_game_info( player_name, game_info ):
@@ -15,7 +16,7 @@ def get_champion_name_from_game_info( player_name, game_info ):
 
 def get_champion_id_by_name( name, team ):
     
-    internal_name = main.stripSpaceAndLower(name)
+    internal_name = players.to_clean_name(name)
     for player in team:
         if player['summonerInternalName'] == internal_name:
             return player['championId']

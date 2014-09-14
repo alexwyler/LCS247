@@ -7,15 +7,12 @@ from urllib import parse, request
 import players
 import json
 import platform
-import subprocess
+import league_runner
 import time
-import os
 import threading
 import champion
 import irc_bot
 import twitch
-from pstats import Stats
-
 
 #
 # mock active_games module
@@ -30,20 +27,11 @@ RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/static-data/na"
 
 GAME_TYPES = ['RANKED_SOLO_5x5']
 
-MAC_LOL_VERSION = "0.0.0.133"
-MAC_LOL_CLIENT_VERSION = "0.0.0.144"
-
-PC_LOL_VERSION = "0.0.1.54"
-PC_LOL_CLIENT_VERSION = "0.0.1.54"
-
 IN_GAME_PING_FREQUENCY = 5
 SPECTATOR_DELAY = 3 * 60
 
 def init():
     irc_bot.init()
-    if platform.system() != 'Darwin':
-        os.chdir(r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.54\deploy")
-    pass;
 
 def main():
     init()
@@ -61,27 +49,27 @@ def main():
 
             print( update_twitch_channel(player, account, game_info) )
             
+            league_runner.open_game(spectate_info, team_str, position)
             if platform.system() != 'Darwin':
-                game_thread = threading.Thread( target=open_game_pc, args = (spectate_info,) )
-                game_thread.start()
-                ahk_thread = threading.Thread( target=startAutohotkey, args = (team_str,str(position),) )
-                ahk_thread.start()
+                league_runner.open_game_pc()
             else:
-                open_game_mac(spectate_info)
+                league_runner.open_game_mac(spectate_info, team_str, position)
                 pass
             
             print("Waiting for game to end...")
-            while get_active_game(account):
+            while True:
+                try:
+                    if get_active_game(account): 
+                        break
+                except Exception:
+                    pass
                 time.sleep(IN_GAME_PING_FREQUENCY)
             
             print("Game complete. Waiting for spectator delay...")
             time.sleep(SPECTATOR_DELAY)
             
             print("Killing game..")
-            if platform.system() != 'Darwin':
-                kill_game_pc()
-            else:
-                kill_game_mac()
+            league_runner.kill_game()
 
         else:
             print("No active games!")
@@ -96,7 +84,7 @@ def get_player_position( account, running_game_info ):
             
 #returns is found on team 1 and position
 def find_player_by_name( name, team_1, team_2 ):
-    internal_name = stripSpaceAndLower(name)
+    internal_name = players.to_clean_name(name)
     index = 0
     for player in team_1:
         if player['summonerInternalName'] == internal_name:
@@ -110,59 +98,6 @@ def find_player_by_name( name, team_1, team_2 ):
         index += 1
     pass
 
-def stripSpaceAndLower( raw ):
-    return raw.replace(" ", "").lower()
-
-
-'''player locator
-'''
-def startAutohotkey( is_team_1, index):
-    
-    subprocess.call([r"C:\Program Files (x86)\AutoHotkey\AutoHotkey.exe",
-                     r"C:\Users\Aleesa\Documents\GitHub\LCS247\Autohotkey\SpectatorHelper.ahk",
-                     is_team_1,
-                     index])
-    pass
-
-            
-'''
-OS Specific ways of killing shit
-'''
-def kill_game_mac():
-    os.system("killall -9 LeagueofLegends");
-    pass
-
-def kill_game_pc():
-    os.system( r'taskkill /F /IM "League of Legends.exe"' );
-    pass
-
-'''
-Opens game on mac given the spectate_info and returns a handle on the process
-'''
-def open_game_mac(spectate_info):
-    devnull = open(os.devnull, "w")
-    ip_and_port = str(spectate_info['observerServerIp']) + ':' + str(spectate_info['observerServerPort'])
-    cmd = '''
-    cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/{0}/deploy/LeagueOfLegends.app/Contents/MacOS/
-    riot_launched=true "/Applications/League of Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/{0}/deploy/LeagueOfLegends.app/Contents/MacOS/LeagueofLegends" 8394 LoLLauncher "/Applications/League of Legends.app/Contents/LoL/RADS/projects/lol_air_client/releases/{1}/deploy/bin/LolClient" "spectator {2} {3} {4} {5}"
-    '''.format(MAC_LOL_VERSION, MAC_LOL_CLIENT_VERSION, ip_and_port, spectate_info['observerEncryptionKey'], spectate_info['gameId'], 'NA1')
-    
-    full_cmd = ["bash", "-c", cmd]
-    
-    return subprocess.Popen(full_cmd, stderr = devnull)
-
-def open_game_pc(spectate_info):
-    ip_and_port = str(spectate_info['observerServerIp']) + ':' + str(spectate_info['observerServerPort'])
-    encryption_key = spectate_info['observerEncryptionKey']
-    game_id = spectate_info['gameId']
-    server = "NA1"
-    
-    return subprocess.call([r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\{0}\deploy\League of Legends.exe".format(PC_LOL_VERSION),
-                "8394",
-                "LoLLauncher.exe",
-                "",
-                "spectator {0} {1} {2} {3}".format( ip_and_port, encryption_key, game_id, server )])
-    
 '''
 Returns tuple of (player, account, game_info) for the most popular current game
 '''
