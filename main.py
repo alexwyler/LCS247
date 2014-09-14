@@ -16,6 +16,14 @@ import irc_bot
 import twitch
 from pstats import Stats
 
+
+#
+# mock active_games module
+#
+class active_games:
+    LOCK = threading.RLock()
+    ACTIVE_PERSONALITIES = {}
+
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
 RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/static-data/na"

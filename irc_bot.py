@@ -34,7 +34,7 @@ def init():
             readbuffer=temp.pop( )
             
             for line in temp:
-                print('data: ' + line)
+                print('CHAT DATA: ' + line)
                 time.sleep(1)
                  
     t = threading.Thread(target=process)
