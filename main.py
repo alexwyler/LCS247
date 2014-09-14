@@ -6,19 +6,12 @@ Created on Sep 12, 2014
 import players
 import league_runner
 import time
-import threading
 import champion
 import irc_bot
 import twitch
 import api
 import util
-
-#
-# mock active_games module
-#
-class active_games:
-    LOCK = threading.RLock()
-    ACTIVE_PERSONALITIES = {}
+import active_games
 
 GAME_TYPES = ['RANKED_SOLO_5x5']
 
@@ -27,42 +20,52 @@ SPECTATOR_DELAY = 3 * 60
 
 def init():
     irc_bot.init()
+    active_games.init()
 
 def main():
     init()
     
     while True:
-        print("Searching for next game...")
-        player, account, game_info = get_next_game()
+        print('Searching for suitable games...')
+        active_games.lock.acquire()
+        selected_game = None
+        for personality_name in active_games.ACTIVE_PERSONALITIES:
+            print(personality_name + " is in game!")
+        active_games.lock.release()
+        if not selected_game:
+            print('No suitable games found...')
+        time.sleep(10)
         
-        if game_info:
-            spectate_info = game_info['playerCredentials'];   
-            print(player, account, spectate_info)
-            team, position = util.get_player_position(account, game_info)
-            team_str = str(team).join(str(team).split()).lower()
-            print( "Position found: " + team_str + ", " + str(position) )
-
-            print( update_twitch_channel(player, account, game_info) )
-            
-            league_runner.open_game(spectate_info, team_str, position)
-            
-            print("Waiting for game to end...")
-            while True:
-                try:
-                    if api.get_active_game(account): 
-                        break
-                except Exception:
-                    pass
-                time.sleep(IN_GAME_PING_FREQUENCY)
-            
-            print("Game complete. Waiting for spectator delay...")
-            time.sleep(SPECTATOR_DELAY)
-            
-            print("Killing game..")
-            league_runner.kill_game()
-
-        else:
-            print("No active games!")
+#         player, account, game_info = get_next_game()
+#         
+#         if game_info:
+#             spectate_info = game_info['playerCredentials'];   
+#             print(player, account, spectate_info)
+#             team, position = util.get_player_position(account, game_info)
+#             team_str = str(team).join(str(team).split()).lower()
+#             print( "Position found: " + team_str + ", " + str(position) )
+# 
+#             print( update_twitch_channel(player, account, game_info) )
+#             
+#             league_runner.open_game(spectate_info, team_str, position)
+#             
+#             print("Waiting for game to end...")
+#             while True:
+#                 try:
+#                     if api.get_active_game(account): 
+#                         break
+#                 except Exception:
+#                     pass
+#                 time.sleep(IN_GAME_PING_FREQUENCY)
+#             
+#             print("Game complete. Waiting for spectator delay...")
+#             time.sleep(SPECTATOR_DELAY)
+#             
+#             print("Killing game..")
+#             league_runner.kill_game()
+# 
+#         else:
+#             print("No active games!")
     
     pass
 

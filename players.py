@@ -146,7 +146,12 @@ def test():
     if not get_personality('grraffe'):
         create_personality('grraffe')
     hype_personality('grraffe', 1)
+    
+    for personality_name in PLAYERS:
+        hype_personality(personality_name, 1)
+        
     print(get_accounts_with_hype())
+
     
 if __name__ == "__main__":
     test()

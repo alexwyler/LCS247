@@ -7,6 +7,7 @@ import collections
 import concurrent.futures
 import threading
 import time
+import traceback
 
 import api
 import players
@@ -25,22 +26,23 @@ def get_tracked_list():
 
 def lookup_account( personality, account ):
     try:
-#         print( "Looking up: " + account )
+        print( "Looking up: " + account )
         game_info = api.get_active_game( account )
         personality_name = personality['name']
         if game_info:
-            print( "account: " + account )
-            print( "game info: " + str(game_info))
-            print( "personality:" + personality['name'] )
+            #print( "account: " + account )
+            #print( "game info: " + str(game_info))
+            #print( "personality:" + personality['name'] )
             
             if personality_name not in ACTIVE_PERSONALITIES:
-                print("--- Adding" + personality_name )
+                print("--- Adding " + personality_name )
                 ACTIVE_PERSONALITIES[personality_name] = (account, time.time(), game_info)
         else:
-            print("--- Delete" + personality_name )
-            del ACTIVE_PERSONALITIES[personality_name]
+            #print("--- Delete" + personality_name )
+            ACTIVE_PERSONALITIES.pop(personality_name, None)
     except Exception as e:
-#         print("exception: ",e )
+        print('Error looking up game: ' + str(e))
+        traceback.print_exc()
         pass
 #             
 
