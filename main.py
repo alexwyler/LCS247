@@ -65,7 +65,7 @@ def main():
             while get_active_game(account):
                 time.sleep(IN_GAME_PING_FREQUENCY)
             
-            print("Game complete. Waiting for specator delay")
+            print("Game complete. Waiting for spectator delay...")
             time.sleep(SPECTATOR_DELAY)
             
             print("Killing game..")
