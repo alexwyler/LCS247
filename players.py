@@ -79,8 +79,6 @@ stores the player as the clean version (lower case, space stripped) contains a l
 that were used to create the clean version
 
 '''
-def getHype( player ):
-    return player.hype
   
 def hypePlayer( player ):
     clean_name = main.stripSpaceAndLower(player)
