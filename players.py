@@ -3,8 +3,12 @@ Created on Sep 12, 2014
 
 @author: alexwyler
 '''
+from operator import itemgetter, attrgetter
 import collections
+import main
+import sqlite3
 
+POPULAR_PLAYERS = collections.OrderedDict()
 PLAYERS = collections.OrderedDict()
 
 PLAYERS['Shiptur'] = ['Shiphtur', 'mMe Shiphtur', 'Chapanya', 'CST Shiponya', 'Pawn Dog', 'Apdo Dog']
@@ -45,3 +49,132 @@ PLAYERS['Tossum'] = ['tossum']
 PLAYERS['Much Glorf Wow'] = ['muchglorfwow']
 PLAYERS['Bwas'] = ['bwas']
 PLAYERS['LattMan'] = ['lattman']
+
+TABLE_PLAYER_HYPE = "player_hype"
+
+class Player:
+    def __init__(self, hype, clean_name, nicks):
+        self.hype = hype
+        self.clean_name = clean_name
+        self.nicks = nicks
+    def __repr__(self):
+        return repr((self.hype, self.clean_name, self.nicks))
+    
+    def init_from_db(self, hype, clean_name, encoded_nicks ):
+        self.hype = hype
+        self.clean_name = clean_name
+        self.nicks = decode_nicks(encoded_nicks)
+        
+    
+def encode_nicks( player ):
+    return ",".join( player.nicks )
+
+def decode_nicks( encoded_nicks ):
+    return encoded_nicks.split(",")
+
+
+'''
+Hypes a player in the popular player dictionary, creates an enty if the player does not exist
+stores the player as the clean version (lower case, space stripped) contains a list of nicknames
+that were used to create the clean version
+
+'''
+def getHype( player ):
+    return player.hype
+  
+def hypePlayer( player ):
+    clean_name = main.stripSpaceAndLower(player)
+     
+    if( clean_name not in POPULAR_PLAYERS.keys() ):
+        newPlayer = Player(1, clean_name, [player])
+        POPULAR_PLAYERS.setdefault(clean_name, newPlayer)
+    else:
+        oldPlayer = POPULAR_PLAYERS[clean_name]
+        if player not in oldPlayer.nicks:
+            oldPlayer.nicks.append(player)
+        oldPlayer.hype += 1
+        POPULAR_PLAYERS[clean_name] = oldPlayer
+    pass
+
+def get_sorted_list():
+    return sorted( POPULAR_PLAYERS, key= lambda x:POPULAR_PLAYERS[x].hype, reverse = True )
+
+def insert_player( player ):
+    encoded_nicks = encode_nicks(player)
+    
+    conn = sqlite3.connect('players.db')
+    c = conn.cursor()
+    
+    ins = 'INSERT INTO '+TABLE_PLAYER_HYPE+' VALUES '+"('"+str(player.hype)+"','"+str(player.clean_name)+"','"+str(encoded_nicks)+"');"
+    c.execute( ins )
+    
+    conn.commit()
+    conn.close()
+    pass
+
+def get_player_hype_list():
+    conn = sqlite3.connect('players.db')
+    c = conn.cursor()
+    get = 'SELECT * FROM ' + TABLE_PLAYER_HYPE + ";"
+    c.execute( get )
+     
+    for s in c.fetchall():
+        print("---")
+        print( s )
+        
+#     for db_player in 
+#     print( type(user), user.name, user.password )
+    
+    conn.close()
+     
+    pass
+
+def test():
+    
+    for player in PLAYERS:
+        for summoner in PLAYERS[player]:
+            hypePlayer(summoner)
+
+    hypePlayer( "Imaqtpie" )
+    hypePlayer( "ImaqtpIe" )
+    hypePlayer( "ImAqtpIe" )
+    hypePlayer( "new player" )
+    hypePlayer( "Quas" )
+    hypePlayer( "quaS" )
+    hypePlayer( "quAs" )
+    hypePlayer( "QuAs" )
+    hypePlayer( "qUaS" )
+    
+#     insert_player( POPULAR_PLAYERS[get_sorted_list()[0]] )
+    
+#     conn = sqlite3.connect('players.db')
+#     c = conn.cursor()
+#     c.execute('''CREATE TABLE player_hype(hype int, clean_name text, nicks text)''')
+    
+    
+#     insert_player( POPULAR_PLAYERS[get_sorted_list()[1]] )
+     
+#     for player in get_sorted_list():
+#         print(POPULAR_PLAYERS[player])
+#         print( ",".join(POPULAR_PLAYERS[player].nicks) )
+#     pass
+
+    get_player_hype_list()
+
+
+if __name__ == "__main__":
+    test();
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
