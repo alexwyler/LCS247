@@ -60,7 +60,7 @@ def main():
                 ahk_thread = threading.Thread( target=startAutohotkey, args = (team_str,str(position),) )
                 ahk_thread.start()
             else:
-                #open_game_mac(spectate_info)
+                open_game_mac(spectate_info)
                 pass
             
             print("Waiting for game to end...")

@@ -1,7 +1,6 @@
-import sys
 import socket
-import string
 import threading
+import time
  
 #sets variables for connection to twitch chat
 bot_owner = b'LCS247'
@@ -36,6 +35,7 @@ def init():
             
             for line in temp:
                 print('data: ' + line)
+                time.sleep(1)
                  
     t = threading.Thread(target=process)
     t.start()
