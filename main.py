@@ -13,14 +13,12 @@ import os
 import threading
 import champion
 import irc_bot
+import twitch
 from pstats import Stats
 
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
 RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/static-data/na"
-TWITCH_ACCESS_TOKEN = '4x0axpb122pjsartbzar50pcg93ityz'
-TWITCH_BASE_URL = 'https://api.twitch.tv/kraken'
-TWITCH_CHANNEL_NAME = 'LCS247'
 
 GAME_TYPES = ['RANKED_SOLO_5x5']
 
@@ -172,17 +170,10 @@ def get_next_game():
                 print('For '  + safe_str(summoner) + ': ', e)
     return (None, None, None)
 
-
 def update_twitch_channel(player, account, game_info):
     champ_name = champion.get_champion_name_from_game_info(account, game_info)
-    status = 'LCS Players 24/7: {0} Playing {1}'.format(player, champ_name)
-    url = TWITCH_BASE_URL + '/channels/{0}'.format(TWITCH_CHANNEL_NAME) + '?' + parse.urlencode({'oauth_token': TWITCH_ACCESS_TOKEN})
-    data = parse.urlencode({'channel[status]': status}).encode()
-    req = request.Request(url, data=data)
-    req.add_header('Accept', 'application/vnd.twitchtv.v2+json')
-    req.get_method = lambda: 'PUT'
-    get_json(req)
-    return status
+    title = 'LCS Players 24/7: {0} Playing {1}'.format(player, champ_name)
+    twitch.update_channel_title(title)
 
 def authenticate_mashape_request(req):
     req.add_header("X-Mashape-Key", "RQk9vZZLGQmshgjK5Yg8nsx5rz4Ep1SJ5I5jsneUxclaP4OTJR")
