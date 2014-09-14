@@ -63,6 +63,8 @@ def get_accounts_with_hype():
     return [account['clean_name'] for account in accounts]
     
 PLAYERS = collections.OrderedDict()
+
+PLAYERS['Imaqtpie'] = ['Imaqtpie', 'qtpie', 'looking2sub4lcs', 'Zstinkloser430Z', 'LMQ Tc Tabe', 'Jessica Lynn', 'adsafadfdsafdasf']
 PLAYERS['Shiptur'] = ['Shiphtur', 'mMe Shiphtur', 'Chapanya', 'CST Shiponya', 'Pawn Dog', 'Apdo Dog']
 PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
 PLAYERS['Dexter'] = ['dexter', 'GoldPoro2', 'LDdexter', 'OPOP174AMHA195', 'CIJL963PFPA447B', 'CLGsavior', 'CHIMPERATOR']
@@ -70,7 +72,6 @@ PLAYERS['PorpoisePops'] = ['PorpoisePops', 'vVv PorpoisePops']
 PLAYERS['Slooshi'] = ['Slooshi', 'aL Slooshi', 'Slooshi8']
 PLAYERS['frommaplestreet'] = ['frommaplestreet', 'Velocity Maple']
 PLAYERS['Dodo8'] = ['Dodo8']
-PLAYERS['Imaqtpie'] = ['Imaqtpie', 'qtpie', 'looking2sub4lcs', 'Zstinkloser430Z', 'LMQ Tc Tabe', 'Jessica Lynn', 'adsafadfdsafdasf']
 PLAYERS['Pobelter'] = ['Pobelter', 'intero', 'imPobelter', 'Crs Pobelt', 'xPobelter', 'Crs Pobelter', 'Apdo Dog1', 'Wizikx']
 PLAYERS['ZionSpartan'] = ['ZionSpartan'];
 PLAYERS['Altec'] = ['Altec', 'xiaomx', 'AItecX', 'illustic', 'Crs Altec', 'scarraru', 'AItecRu', 'AltecX', 'C9 Altec']
@@ -124,6 +125,7 @@ def test():
     hype_account("Voyboy", 1)
     print(get_personality_for_account_name('crs vooby'))
     print(get_accounts_with_hype())
+    pass
     
 if __name__ == "__main__":
     test();
