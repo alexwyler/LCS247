@@ -13,6 +13,7 @@ import os
 import threading
 import champion
 import irc_bot
+from pstats import Stats
 
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
@@ -52,7 +53,7 @@ def main():
             team_str = str(team).join(str(team).split()).lower()
             print( "Position found: " + team_str + ", " + str(position) )
 
-            update_twitch_channel(player, account, game_info)
+            print( update_twitch_channel(player, account, game_info) )
             
             if platform.system() != 'Darwin':
                 game_thread = threading.Thread( target=open_game_pc, args = (spectate_info,) )
@@ -181,6 +182,7 @@ def update_twitch_channel(player, account, game_info):
     req.add_header('Accept', 'application/vnd.twitchtv.v2+json')
     req.get_method = lambda: 'PUT'
     get_json(req)
+    return status
 
 def authenticate_mashape_request(req):
     req.add_header("X-Mashape-Key", "RQk9vZZLGQmshgjK5Yg8nsx5rz4Ep1SJ5I5jsneUxclaP4OTJR")

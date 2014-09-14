@@ -32,4 +32,5 @@ def test():
     print( name )
     pass
 
-test();
+if __name__ == "__main__":
+    test();
