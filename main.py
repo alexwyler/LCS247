@@ -11,6 +11,7 @@ import subprocess
 import time
 import os
 import threading
+import champion
 
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
@@ -57,7 +58,7 @@ def main():
                 ahk_thread = threading.Thread( target=startAutohotkey, args = (team_str,str(position),) )
                 ahk_thread.start()
             else:
-                open_game_mac(spectate_info)
+                #open_game_mac(spectate_info)
                 pass
             
             while get_active_game(account):
@@ -170,12 +171,14 @@ def get_next_game():
 
 
 def update_twitch_channel(player, account, game_info):
-    status = 'LCS Players 24/7: {0} Playing Now!'.format(player)
+    champ_name = champion.get_champion_name_from_game_info(account, game_info)
+    status = 'LCS Players 24/7: {0} Playing {1}'.format(player, champ_name)
     url = TWITCH_BASE_URL + '/channels/{0}'.format(TWITCH_CHANNEL_NAME) + '?' + parse.urlencode({'oauth_token': TWITCH_ACCESS_TOKEN})
     data = parse.urlencode({'channel[status]': status}).encode()
     req = request.Request(url, data=data)
     req.add_header('Accept', 'application/vnd.twitchtv.v2+json')
     req.get_method = lambda: 'PUT'
+    get_json(req)
 
 def authenticate_mashape_request(req):
     req.add_header("X-Mashape-Key", "RQk9vZZLGQmshgjK5Yg8nsx5rz4Ep1SJ5I5jsneUxclaP4OTJR")
