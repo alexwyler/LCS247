@@ -5,6 +5,7 @@ Created on Sep 12, 2014
 '''
 import collections
 import sqlite3
+import util
 
 POPULAR_PLAYERS = collections.OrderedDict()
 
@@ -15,8 +16,13 @@ def lazy_init():
     if not cursor.fetchone():
         init_data()
 
-def hype_account( account_name, amount ):
-    personality = get_personality_for_account_name(account_name)
+'''
+Given a personality name or account name, hype that personality
+'''
+def hype_personality( name, amount ):
+    personality = get_personality(name)
+    if not personality:
+        personality = get_personality_for_account_name(name)
     if personality:
         conn = get_conn()
         cursor=conn.cursor()
@@ -35,13 +41,10 @@ def get_conn():
     conn.row_factory = dict_factory
     return conn
 
-def to_clean_name(account_name):
-    return account_name.replace(" ", "").lower()
-
 def get_personality_for_account_name(account_name):
     conn = get_conn()
     cursor=conn.cursor()
-    cursor.execute("SELECT name, hype FROM personalities as p inner join accounts as a on p.name = a.personality_name where a.clean_name = ?", (to_clean_name(account_name),))
+    cursor.execute("SELECT name, hype FROM personalities as p inner join accounts as a on p.name = a.personality_name where a.clean_name = ?", (util.to_clean_name(account_name),))
     personality = cursor.fetchone()
     conn.close()
     return personality
@@ -114,7 +117,7 @@ def init_data():
     for personality_name in PLAYERS:
         c.execute("INSERT INTO personalities (name, hype) VALUES (?, 0)", (personality_name,))
         for account_name in PLAYERS[personality_name]:
-            c.execute("INSERT INTO accounts (clean_name, display_name, region, personality_name) VALUES (?, ?, 'NA', ?)", (to_clean_name(account_name), account_name, personality_name))
+            c.execute("INSERT INTO accounts (clean_name, display_name, region, personality_name) VALUES (?, ?, 'NA', ?)", (util.to_clean_name(account_name), account_name, personality_name))
     conn.commit()
     conn.close()
 
@@ -122,7 +125,7 @@ lazy_init()
 
 def test():
     print(get_personality('Voyboy'))
-    hype_account("Voyboy", 1)
+    hype_personality("Voyboy", 1)
     print(get_personality_for_account_name('crs vooby'))
     print(get_accounts_with_hype())
     pass
