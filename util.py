@@ -12,7 +12,6 @@ def safe_str(string):
         return str(string.encode('utf-8'))
     except TypeError:
         return str(string)
-    
 
 def get_player_position( account, running_game_info ):
     team_1 = running_game_info['game']['teamOne']['array']
