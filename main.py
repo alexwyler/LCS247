@@ -28,46 +28,40 @@ def main():
     while True:
         print('Searching for suitable games...')
         active_games.lock.acquire()
-        selected_game = None
+        selected_game_details = None
         for personality_name in active_games.ACTIVE_PERSONALITIES:
-            print(personality_name + " is in game!")
+            selected_game_details = active_games.ACTIVE_PERSONALITIES[personality_name]
+            break
         active_games.lock.release()
-        if not selected_game:
+        if not selected_game_details:
             print('No suitable games found...')
+        else:
+            account, _, game_info = selected_game_details
+            spectate_info = game_info['playerCredentials'];
+            print(personality_name, account, spectate_info)
+            team, position = util.get_player_position(account, game_info)
+            team_str = str(team).join(str(team).split()).lower()
+            print( "Position found: " + team_str + ", " + str(position) )
+ 
+            print( update_twitch_channel(personality_name, account, game_info) )
+             
+            league_runner.open_game(spectate_info, team_str, position)
+             
+            print("Waiting for game to end...")
+            while True:
+                try:
+                    if api.get_active_game(account): 
+                        break
+                except Exception:
+                    pass
+                time.sleep(IN_GAME_PING_FREQUENCY)
+             
+            print("Game complete. Waiting for spectator delay...")
+            time.sleep(SPECTATOR_DELAY)
+             
+            print("Killing game..")
+            league_runner.kill_game()
         time.sleep(10)
-        
-#         player, account, game_info = get_next_game()
-#         
-#         if game_info:
-#             spectate_info = game_info['playerCredentials'];   
-#             print(player, account, spectate_info)
-#             team, position = util.get_player_position(account, game_info)
-#             team_str = str(team).join(str(team).split()).lower()
-#             print( "Position found: " + team_str + ", " + str(position) )
-# 
-#             print( update_twitch_channel(player, account, game_info) )
-#             
-#             league_runner.open_game(spectate_info, team_str, position)
-#             
-#             print("Waiting for game to end...")
-#             while True:
-#                 try:
-#                     if api.get_active_game(account): 
-#                         break
-#                 except Exception:
-#                     pass
-#                 time.sleep(IN_GAME_PING_FREQUENCY)
-#             
-#             print("Game complete. Waiting for spectator delay...")
-#             time.sleep(SPECTATOR_DELAY)
-#             
-#             print("Killing game..")
-#             league_runner.kill_game()
-# 
-#         else:
-#             print("No active games!")
-    
-    pass
 
 '''
 Returns tuple of (player, account, game_info) for the most popular current game
