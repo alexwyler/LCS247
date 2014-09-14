@@ -61,8 +61,8 @@ def main():
                 #open_game_mac(spectate_info)
                 pass
             
+            print("Waiting for game to end...")
             while get_active_game(account):
-                print("Checking game status...")
                 time.sleep(IN_GAME_PING_FREQUENCY)
             
             print("Game complete. Waiting for specator delay")
