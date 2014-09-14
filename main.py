@@ -12,6 +12,7 @@ import time
 import os
 import threading
 import champion
+import irc_bot
 
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
@@ -32,6 +33,7 @@ IN_GAME_PING_FREQUENCY = 5
 SPECTATOR_DELAY = 3 * 60
 
 def init():
+    irc_bot.init()
     if platform.system() != 'Darwin':
         os.chdir(r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.54\deploy")
     pass;
