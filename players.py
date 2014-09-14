@@ -147,7 +147,7 @@ def init_data():
 
 lazy_init()
 
-def test():
+def init():
     print(get_personality('Voyboy'))
     hype_personality("Voyboy", 1)
     print(get_personality_for_account_name('crs vooby'))
@@ -162,4 +162,4 @@ def test():
 
     
 if __name__ == "__main__":
-    test()
+    init()
