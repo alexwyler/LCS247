@@ -16,6 +16,14 @@ def lazy_init():
     if not cursor.fetchone():
         init_data()
 
+def create_personality(name, region='NA'):
+    conn = get_conn()
+    cursor=conn.cursor()
+    cursor.execute("INSERT INTO personalities (name, hype) VALUES (?, 0)", (name,))
+    cursor.execute("INSERT INTO accounts (clean_name, display_name, region, personality_name) VALUES (?, ?, 'NA', ?)", (util.to_clean_name(name), name, name))
+    conn.commit()
+    conn.close()
+
 '''
 Given a personality name or account name, hype that personality
 '''
@@ -127,8 +135,10 @@ def test():
     print(get_personality('Voyboy'))
     hype_personality("Voyboy", 1)
     print(get_personality_for_account_name('crs vooby'))
+    if not get_personality('grraffe'):
+        create_personality('grraffe')
+    hype_personality('grraffe', 1)
     print(get_accounts_with_hype())
-    pass
     
 if __name__ == "__main__":
     test()
