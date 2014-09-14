@@ -7,7 +7,7 @@ import threading
 import os
 import platform
 import subprocess
-import players
+import util
 
 MAC_LOL_VERSION = "0.0.0.133"
 MAC_LOL_CLIENT_VERSION = "0.0.0.144"
@@ -85,7 +85,7 @@ def open_game_pc(spectate_info, team_str, position):
     
 def get_champion_id_by_name( name, team ):
     
-    internal_name = players.to_clean_name(name)
+    internal_name = util.to_clean_name(name)
     for player in team:
         if player['summonerInternalName'] == internal_name:
             return player['championId']

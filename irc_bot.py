@@ -1,6 +1,8 @@
 import socket
 import threading
 import time
+import players
+import re
  
 #sets variables for connection to twitch chat
 bot_owner = b'LCS247'
@@ -14,6 +16,10 @@ queue = 0 #sets variable for anti-spam queue functionality
 command = '!notset'
 cmdmsg = 'This command is not set yet'
 newsmsg = 'No news set'
+
+MESSAGE_PATTERN = re.compile(':(.*)!(.*)@(.*).tmi.twitch.tv PRIVMSG #lcs247 :(.*)', re.IGNORECASE)
+
+HYPE_COMMAND = re.compile('hype (.*)')
  
 def init():
 
@@ -34,7 +40,16 @@ def init():
             readbuffer=temp.pop( )
             
             for line in temp:
-                print('CHAT DATA: ' + line)
+                m = MESSAGE_PATTERN.match(line)
+                if m:
+                    user, message = m.group(1, 4)
+                    
+                    hype_m = HYPE_COMMAND.match(message)
+                    if hype_m:
+                        player = hype_m.group(1).strip()
+                        players.hype_personality(player, 1) 
+                        personality = players.get_personality(player)   
+                        print("'{0}' adds 1 hype to '{1}', for a total of {2} hype!".format(user, personality['name'], personality['hype']))
             
             time.sleep(1)
                  

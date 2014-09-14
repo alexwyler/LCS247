@@ -29,8 +29,6 @@ Given a personality name or account name, hype that personality
 '''
 def hype_personality( name, amount ):
     personality = get_personality(name)
-    if not personality:
-        personality = get_personality_for_account_name(name)
 
     if not personality:
         create_personality(name)
@@ -53,6 +51,12 @@ def get_conn():
     conn.row_factory = dict_factory
     return conn
 
+def get_personality(name):
+    personality = get_personality_for_name(name)
+    if not personality:
+        personality = get_personality_for_account_name(name)
+    return personality
+
 def get_personality_for_account_name(account_name):
     conn = get_conn()
     cursor=conn.cursor()
@@ -61,7 +65,7 @@ def get_personality_for_account_name(account_name):
     conn.close()
     return personality
 
-def get_personality(name):
+def get_personality_for_name(name):
     conn = get_conn()
     cursor=conn.cursor()
     cursor.execute("SELECT name, hype FROM personalities where name = ?", (name,))
@@ -79,7 +83,7 @@ def get_accounts_with_hype():
     
 PLAYERS = collections.OrderedDict()
 
-PLAYERS['Imaqtpie'] = ['Imaqtpie', 'qtpie', 'looking2sub4lcs', 'Zstinkloser430Z', 'LMQ Tc Tabe', 'Jessica Lynn', 'adsafadfdsafdasf']
+PLAYERS['Imaqtpie'] = ['Imaqtpie', 'qtpie', 'Zstinkloser430Z', 'LMQ Tc Tabe', 'Jessica Lynn', 'adsafadfdsafdasf']
 PLAYERS['Shiptur'] = ['Shiphtur', 'mMe Shiphtur', 'Chapanya', 'CST Shiponya', 'Pawn Dog', 'Apdo Dog']
 PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
 PLAYERS['Dexter'] = ['dexter', 'GoldPoro2', 'LDdexter', 'OPOP174AMHA195', 'CIJL963PFPA447B', 'CLGsavior', 'CHIMPERATOR']
