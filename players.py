@@ -54,8 +54,13 @@ def get_personality(name):
     conn.close()
     return personality
 
-def get_sorted_list():
-    return sorted( POPULAR_PLAYERS, key= lambda x:POPULAR_PLAYERS[x].hype, reverse = True )
+def get_accounts_with_hype():
+    conn = get_conn()
+    cursor=conn.cursor()
+    cursor.execute("SELECT a.clean_name FROM accounts AS a INNER JOIN personalities AS p ON a.personality_name = p.name where p.hype > 0")
+    accounts = cursor.fetchall()
+    conn.close()
+    return [account['clean_name'] for account in accounts]
     
 PLAYERS = collections.OrderedDict()
 PLAYERS['Shiptur'] = ['Shiphtur', 'mMe Shiphtur', 'Chapanya', 'CST Shiponya', 'Pawn Dog', 'Apdo Dog']
@@ -118,6 +123,7 @@ def test():
     print(get_personality('Voyboy'))
     hype_account("Voyboy", 1)
     print(get_personality_for_account_name('crs vooby'))
+    print(get_accounts_with_hype())
     
 if __name__ == "__main__":
     test();
