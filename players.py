@@ -31,7 +31,11 @@ def hype_personality( name, amount ):
     personality = get_personality(name)
     if not personality:
         personality = get_personality_for_account_name(name)
-    if personality:
+
+    if not personality:
+        create_personality(name)
+        hype_personality(name, amount)
+    else:
         conn = get_conn()
         cursor=conn.cursor()
         cursor.execute("UPDATE personalities SET hype = hype + ? where name = ?", (amount, personality['name']))
