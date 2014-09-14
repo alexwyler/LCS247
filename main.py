@@ -6,7 +6,6 @@ Created on Sep 12, 2014
 from urllib import parse, request
 import players
 import json
-import platform
 import league_runner
 import time
 import threading
@@ -50,11 +49,6 @@ def main():
             print( update_twitch_channel(player, account, game_info) )
             
             league_runner.open_game(spectate_info, team_str, position)
-            if platform.system() != 'Darwin':
-                league_runner.open_game_pc()
-            else:
-                league_runner.open_game_mac(spectate_info, team_str, position)
-                pass
             
             print("Waiting for game to end...")
             while True:
