@@ -11,7 +11,6 @@ import subprocess
 import time
 import os
 import threading
-from test.test_pyexpat import PositionTest
 
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"

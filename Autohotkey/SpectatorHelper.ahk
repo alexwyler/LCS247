@@ -43,10 +43,18 @@
 	index = %2%
 	if 1 contains true
 	{
-		Send {F1 down}{F1 up}
+		Loop, 5
+		{
+			Send {F1 down}{F1 up}
+			Sleep 50
+		}
 		selectTwice( index + 1 )
 	} else {
-		Send {F2 down}{F2 up}
+		Loop, 5
+		{
+			end {F2 down}{F2 up}
+			Sleep 50
+		}
 		if index = 0 
 		{
 			Loop, 10 
