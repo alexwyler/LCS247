@@ -7,8 +7,6 @@ import collections
 
 PLAYERS = collections.OrderedDict()
 
-PLAYERS['HurricaneJanna'] = ['hurricanejanna']
-
 PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
 PLAYERS['Dexter'] = ['dexter', 'GoldPoro2', 'LDdexter', 'OPOP174AMHA195', 'CIJL963PFPA447B', 'CLGsavior', 'CHIMPERATOR']
 PLAYERS['PorpoisePops'] = ['PorpoisePops', 'vVv PorpoisePops']

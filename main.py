@@ -15,6 +15,9 @@ import threading
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
 RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/static-data/na"
+TWITCH_ACCESS_TOKEN = '4x0axpb122pjsartbzar50pcg93ityz'
+TWITCH_BASE_URL = 'https://api.twitch.tv/kraken'
+TWITCH_CHANNEL_NAME = 'LCS247'
 
 GAME_TYPES = ['RANKED_SOLO_5x5']
 
@@ -28,9 +31,6 @@ IN_GAME_PING_FREQUENCY = 5
 SPECTATOR_DELAY = 3 * 60
 
 def init():
-    
-    
-    
     if platform.system() != 'Darwin':
         os.chdir(r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.54\deploy")
     pass;
@@ -49,13 +49,16 @@ def main():
             team_str = str(team).join(str(team).split()).lower()
             print( "Position found: " + team_str + ", " + str(position) )
 
+            update_twitch_channel(player, account, game_info)
+            
             if platform.system() != 'Darwin':
                 game_thread = threading.Thread( target=open_game_pc, args = (spectate_info,) )
                 game_thread.start()
                 ahk_thread = threading.Thread( target=startAutohotkey, args = (team_str,str(position),) )
                 ahk_thread.start()
             else:
-                process = open_game_mac(spectate_info)
+                open_game_mac(spectate_info)
+                pass
             
             while get_active_game(account):
                 print("Checking game status...")
@@ -68,7 +71,7 @@ def main():
             if platform.system() != 'Darwin':
                 kill_game_pc()
             else:
-                kill_game_mac(process)
+                kill_game_mac()
 
         else:
             print("No active games!")
@@ -164,7 +167,15 @@ def get_next_game():
             except Exception as e:
                 print('For '  + safe_str(summoner) + ': ', e)
     return (None, None, None)
-            
+
+
+def update_twitch_channel(player, account, game_info):
+    status = 'LCS Players 24/7: {0} Playing Now!'.format(player)
+    url = TWITCH_BASE_URL + '/channels/{0}'.format(TWITCH_CHANNEL_NAME) + '?' + parse.urlencode({'oauth_token': TWITCH_ACCESS_TOKEN})
+    data = parse.urlencode({'channel[status]': status}).encode()
+    req = request.Request(url, data=data)
+    req.add_header('Accept', 'application/vnd.twitchtv.v2+json')
+    req.get_method = lambda: 'PUT'
 
 def authenticate_mashape_request(req):
     req.add_header("X-Mashape-Key", "RQk9vZZLGQmshgjK5Yg8nsx5rz4Ep1SJ5I5jsneUxclaP4OTJR")
