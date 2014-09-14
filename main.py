@@ -120,7 +120,7 @@ def startAutohotkey( is_team_1, index):
 '''
 OS Specific ways of killing shit
 '''
-def kill_game_mac(process):
+def kill_game_mac():
     os.system("killall -9 LeagueofLegends");
     pass
 
