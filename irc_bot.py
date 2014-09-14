@@ -20,7 +20,7 @@ newsmsg = 'No news set'
 MESSAGE_PATTERN = re.compile(':(.*)!(.*)@(.*).tmi.twitch.tv PRIVMSG #lcs247 :(.*)', re.IGNORECASE)
 
 HYPE_COMMAND = re.compile('hype (.*)')
- 
+    
 def init():
 
     def process():
@@ -28,12 +28,14 @@ def init():
         irc = socket.socket()
         irc.connect((server, 6667)) #connects to the server
         
+        def send_message(message):
+            irc.send(bytes('PRIVMSG #lcs247 :{0}\r\n'.format(message), 'UTF-8'))
+        
         #sends variables for connection to twitch chat
         irc.send(b'PASS ' + password + b'\r\n')
         irc.send(b'USER ' + nick + b' 0 * :' + bot_owner + b'\r\n')
         irc.send(b'NICK ' + nick + b'\r\n')
         irc.send(bytes("JOIN #lcs247\r\n", "UTF-8"));
-        irc.send(bytes("PRIVMSG %s :Hello Master\r\n" % 'alexwyler', "UTF-8"))
         while True:
             readbuffer = readbuffer+irc.recv(1024).decode("UTF-8")
             temp = str.split(readbuffer, "\n")
@@ -48,11 +50,12 @@ def init():
                     if hype_m:
                         player = hype_m.group(1).strip()
                         players.hype_personality(player, 1) 
-                        personality = players.get_personality(player)   
-                        print("'{0}' adds 1 hype to '{1}', for a total of {2} hype!".format(user, personality['name'], personality['hype']))
-            
+                        personality = players.get_personality(player)
+                        message = "{0} hypes {1} to {2}!".format(user, personality['name'], personality['hype'])
+                        send_message(message)
+
             time.sleep(1)
-                 
+
     t = threading.Thread(target=process)
     t.start()
     
