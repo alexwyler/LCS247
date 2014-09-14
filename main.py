@@ -17,6 +17,7 @@ GAME_TYPES = ['RANKED_SOLO_5x5']
 
 IN_GAME_PING_FREQUENCY = 5
 SPECTATOR_DELAY = 3 * 60
+START_TIME = time.time()
 
 def init():
     irc_bot.init()
@@ -27,16 +28,11 @@ def main():
     
     while True:
         print('Searching for suitable games...')
-        active_games.lock.acquire()
-        selected_game_details = None
-        for personality_name in active_games.ACTIVE_PERSONALITIES:
-            selected_game_details = active_games.ACTIVE_PERSONALITIES[personality_name]
-            break
-        active_games.lock.release()
+        selected_game_details = get_best_suitable_game()
         if not selected_game_details:
             print('No suitable games found...')
         else:
-            account, _, game_info = selected_game_details
+            personality_name, account, game_info = selected_game_details
             spectate_info = game_info['playerCredentials'];
             print(personality_name, account, spectate_info)
             team, position = util.get_player_position(account, game_info)
@@ -63,20 +59,26 @@ def main():
             league_runner.kill_game()
         time.sleep(10)
 
-'''
-Returns tuple of (player, account, game_info) for the most popular current game
-'''
-def get_next_game():
-    for player in players.PLAYERS:
-        print("Player: " + player)
-        for summoner in players.PLAYERS[player]:
-            try:
-                next_game = api.get_active_game(summoner)
-                if next_game and next_game['game']['queueTypeName'] in GAME_TYPES:
-                    return (player, summoner, next_game)
-            except Exception as e:
-                print('For '  + util.safe_str(summoner) + ': ', e)
-    return (None, None, None)
+def get_best_suitable_game():
+    personalities_by_hype = players.get_personality_names_ordered_by_hype()
+    active_games.lock.acquire()
+    try:
+        for personality_name in personalities_by_hype:
+            active_game_info = active_games.ACTIVE_PERSONALITIES.get(personality_name)
+            if not active_game_info:
+                continue
+            (account, start_time, game_info) = active_game_info
+            time_since_start = time.time() - start_time
+            time_since_init = time.time() - START_TIME
+            if (time_since_init > 3 * 60 and time_since_start < 3 * 60) or time_since_start > 10 * 60:
+                print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
+                continue
+            
+            return (personality_name, account, game_info)
+            
+            break
+    finally:
+        active_games.lock.release()
 
 def update_twitch_channel(player, account, game_info):
     champ_name = champion.get_champion_name_from_game_info(account, game_info)

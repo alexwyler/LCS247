@@ -26,7 +26,7 @@ def get_tracked_list():
 
 def lookup_account( personality, account ):
     try:
-        print( "Looking up: " + account )
+        #print( "Looking up: " + account )
         game_info = api.get_active_game( account )
         personality_name = personality['name']
         if game_info:
@@ -41,8 +41,8 @@ def lookup_account( personality, account ):
             #print("--- Delete" + personality_name )
             ACTIVE_PERSONALITIES.pop(personality_name, None)
     except Exception as e:
-        print('Error looking up game: ' + str(e))
-        traceback.print_exc()
+        #print('Error looking up game: ' + str(e))
+        #traceback.print_exc()
         pass
 #             
 
@@ -75,11 +75,7 @@ def update():
 #         for completed in result.done:
 #             print( completed )
              
-        print( "size: " + str(len(ACTIVE_PERSONALITIES)))
-
-        for personality in ACTIVE_PERSONALITIES:
-            if ACTIVE_PERSONALITIES[personality]:
-                print( personality + " time: " + str(ACTIVE_PERSONALITIES[personality][1]) )
+        #print( "size: " + str(len(ACTIVE_PERSONALITIES)))
 
 def update_runner():
     while True:
