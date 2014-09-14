@@ -24,12 +24,26 @@ def get_tracked_list():
     return tracked_list
 
 def lookup_account( personality, account ):
-    print( "Looking up: " + account )
-    game_info = api.get_active_game( account )
-    if game_info:
-        print( "account: " + account )
-        print( "game info: " + str(game_info))
-        ACTIVE_PERSONALITIES[personality['name']] = (account, game_info)
+    try:
+#         print( "Looking up: " + account )
+        game_info = api.get_active_game( account )
+        personality_name = personality['name']
+        if game_info:
+            print( "account: " + account )
+            print( "game info: " + str(game_info))
+            print( "personality:" + personality['name'] )
+            
+            if personality_name not in ACTIVE_PERSONALITIES:
+                print("--- Adding" + personality_name )
+                ACTIVE_PERSONALITIES[personality_name] = (account, time.time(), game_info)
+        else:
+            print("--- Delete" + personality_name )
+            del ACTIVE_PERSONALITIES[personality_name]
+    except Exception as e:
+#         print("exception: ",e )
+        pass
+#             
+
         
 #         lock.acquire()
 #         try:
@@ -43,72 +57,43 @@ def lookup_account( personality, account ):
 #             print("finally")
 #             lock.release()
 
-def get( accounts ):
-    
-#    get the personality by account
-    
-    pass
-
 def get_personality_from_account( account_name ):
     for personality in players.PLAYERS:
         for summoner in players.PLAYERS[personality]:
             if account_name == summoner:
                 return personality
-    pass
-
-def testSimple( amount, name ):
-    time.sleep( amount );
-    print("done with: " + name)
-    return name
-
-def testPool():
-    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-        
-        for x in range(0, 30):
-            future1 = executor.submit( testSimple, 2, "f"+str(x) );
-        
-#         print( future1.result() )
-#         print( future2.result() )
-#         print( future3.result() )
-    
-    pass
-
-def testTime():
-    
-    players.hype_personality("nightblue3", 1)
-    
-    start = time.time()
+            
+def update():
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         futures = [ executor.submit( lookup_account, players.get_personality_for_account_name(account), account ) 
                    for account in players.get_accounts_with_hype() ]
-#             
-        results = concurrent.futures.wait( futures )
-#        
-# #         for completed in results.done:
-# #             print(   )
-#         
-        end = time.time()
-        print( end-start )
-        print("\n")
+                     
+        result = concurrent.futures.wait( futures )
         
+#         for completed in result.done:
+#             print( completed )
+             
         print( "size: " + str(len(ACTIVE_PERSONALITIES)))
-         
+
         for personality in ACTIVE_PERSONALITIES:
-            print( personality )
-#         
-#         
-# #             res = lookup_account( account )
-# #             if res:
-# #                 personality = get_personality_from_account( account )
-# #                 print( personality )
-# #     #             ACTIVE_PERSONALITIES.setdefault(key, default)
-# #                 print(res)
+            if ACTIVE_PERSONALITIES[personality]:
+                print( personality + " time: " + str(ACTIVE_PERSONALITIES[personality][1]) )
+
+def update_runner():
+    while True:
+        update()
+        time.sleep(1)
+        
+def init():
+    
+    update_thread = threading.Thread( target=update_runner )
+    update_thread.start()
     
     
     pass
 
 if __name__ == "__main__":
-    testTime();
+    init();
     
     
     
