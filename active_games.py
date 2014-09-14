@@ -5,16 +5,15 @@ Created on Sep 12, 2014
 '''
 import collections
 import concurrent.futures
-import concurrent
 import time
-from turtle import done
+import threading
 
 import main
-from players import Player
 import players
 
 
 ACTIVE_PERSONALITIES = collections.OrderedDict()
+lock = threading.Lock()
 
 def get_tracked_list():
     tracked_list = [];
@@ -30,9 +29,20 @@ def lookup_account( personality, account ):
     print( "Looking up: " + name )
     game_info = main.get_active_game(name)
     if game_info:
-#         print( game_info )
-        ACTIVE_PERSONALITIES.setdefault(personality, (name, game_info) )
-    pass
+        print( "account: " + account )
+        ACTIVE_PERSONALITIES[personality] = (account, (name, game_info) )
+        
+#         lock.acquire()
+#         try:
+#             print("inside try")
+#         if personality not in ACTIVE_PERSONALITIES:
+#             print( "------Found: " + personality + " in " + account )
+#             ACTIVE_PERSONALITIES[personality] = (account, (name, game_info) )
+#         else:
+#             print( account + " already in active personalities" )
+#         finally:
+#             print("finally")
+#             lock.release()
 
 def get( accounts ):
     
@@ -68,27 +78,28 @@ def testTime():
     
     start = time.time()
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
-        futures = [ executor.submit( lookup_account, get_personality_from_account(account), account ) for account in get_tracked_list() ]
-            
+        futures = [ executor.submit( lookup_account, players.get_personality_for_account_name(account), account ) 
+                   for account in players.get_accounts_with_hype() ]
+#             
         results = concurrent.futures.wait( futures )
-       
-#         for completed in results.done:
-#             print(   )
-        
+#        
+# #         for completed in results.done:
+# #             print(   )
+#         
         end = time.time()
         print( end-start )
         print("\n")
-        
+         
         for personality in ACTIVE_PERSONALITIES:
-            print( personality + " - " + str(ACTIVE_PERSONALITIES[personality]))
-        
-        
-#             res = lookup_account( account )
-#             if res:
-#                 personality = get_personality_from_account( account )
-#                 print( personality )
-#     #             ACTIVE_PERSONALITIES.setdefault(key, default)
-#                 print(res)
+            print( personality )
+#         
+#         
+# #             res = lookup_account( account )
+# #             if res:
+# #                 personality = get_personality_from_account( account )
+# #                 print( personality )
+# #     #             ACTIVE_PERSONALITIES.setdefault(key, default)
+# #                 print(res)
     
     
     pass
