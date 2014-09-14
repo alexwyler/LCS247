@@ -5,10 +5,10 @@ Created on Sep 12, 2014
 '''
 import collections
 import concurrent.futures
-import time
 import threading
+import time
 
-import main
+import api
 import players
 
 
@@ -24,13 +24,12 @@ def get_tracked_list():
     return tracked_list
 
 def lookup_account( personality, account ):
-#   do something to get the name
-    name = account
-    print( "Looking up: " + name )
-    game_info = main.get_active_game(name)
+    print( "Looking up: " + account )
+    game_info = api.get_active_game( account )
     if game_info:
         print( "account: " + account )
-        ACTIVE_PERSONALITIES[personality] = (account, (name, game_info) )
+        print( "game info: " + str(game_info))
+        ACTIVE_PERSONALITIES[personality['name']] = (account, game_info)
         
 #         lock.acquire()
 #         try:
@@ -76,6 +75,8 @@ def testPool():
 
 def testTime():
     
+    players.hype_personality("nightblue3", 1)
+    
     start = time.time()
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         futures = [ executor.submit( lookup_account, players.get_personality_for_account_name(account), account ) 
@@ -89,6 +90,8 @@ def testTime():
         end = time.time()
         print( end-start )
         print("\n")
+        
+        print( "size: " + str(len(ACTIVE_PERSONALITIES)))
          
         for personality in ACTIVE_PERSONALITIES:
             print( personality )

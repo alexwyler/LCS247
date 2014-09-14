@@ -19,12 +19,12 @@ def authenticate_mashape_request(req):
 def get_active_game(summoner_name):
     req = request.Request(MASHAPE_BASE_URL + "/summoner/retrieveInProgressSpectatorGameInfo/{0}".format(util.safe_str(summoner_name).replace(" ", "")))
     authenticate_mashape_request(req)
-    print(req.get_full_url())
+#     print(req.get_full_url())
     game_info = get_json(req)
     return game_info if not game_info.get('error') else None
 
 def get_json(url, encoding="utf-8"):
-    print(url)
+#     print(url)
     return json.loads(request.urlopen(url).read().decode(encoding))
 
 def build_api_url(path, params=None):
