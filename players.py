@@ -3,10 +3,12 @@ Created on Sep 12, 2014
 
 @author: alexwyler
 '''
-from operator import itemgetter, attrgetter
 import collections
-import main
+from operator import itemgetter, attrgetter
 import sqlite3
+
+import main
+
 
 POPULAR_PLAYERS = collections.OrderedDict()
 PLAYERS = collections.OrderedDict()
@@ -160,8 +162,14 @@ def test():
     get_player_hype_list()
 
 
+def testTime():
+    print( main.get_active_game("GingerBubbbo") )
+    
+    
+    pass
+
 if __name__ == "__main__":
-    test();
+    testTime();
     
     
     
