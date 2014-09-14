@@ -14,7 +14,7 @@ import threading
 
 RIOT_CLIENT_KEY = "17e7c567-e54e-4995-bf0f-9d1c9dd3722c"
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA/"
-RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/na"
+RIOT_BASE_URL = "https://na.api.pvp.net/api/lol/static-data/na"
 
 GAME_TYPES = ['RANKED_SOLO_5x5']
 
@@ -27,13 +27,16 @@ PC_LOL_CLIENT_VERSION = "0.0.1.54"
 IN_GAME_PING_FREQUENCY = 5
 SPECTATOR_DELAY = 3 * 60
 
-def os_specific_init():
+def init():
+    
+    
+    
     if platform.system() != 'Darwin':
         os.chdir(r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.54\deploy")
     pass;
 
 def main():
-    os_specific_init()
+    init()
     
     while True:
         print("Searching for next game...")
@@ -190,6 +193,13 @@ def safe_str(string):
         return str(string)
 
 def build_api_url(path, params=None):
+    if not params:
+        params = {}
+    
+    params["api_key"] = RIOT_CLIENT_KEY
+    return RIOT_BASE_URL + path + '?' + parse.urlencode(params)
+
+def build_static_api_url(path, params=None):
     if not params:
         params = {}
     

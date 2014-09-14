@@ -29,76 +29,27 @@ PC_LOL_CLIENT_VERSION = "0.0.1.54"
 
 
 
-def end():
-    print("swag2")
-    os.system( r'taskkill /F /IM "League of legends.exe"' )
-    pass
-
-def os_specific_init():
-    if platform.system() != 'Darwin':
-        os.chdir( r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\{0}\deploy".format(PC_LOL_CLIENT_VERSION) )
-    pass;
-
-def startLeague():
-     
-    ip_and_port = "95.172.65.26:8088"
-    encryption_key = "qBGEz0x+lz6BWehztiPRFoBlBE1aMhEb"
-    game_id = "948497185"
-    server = "EUN1"
-     
-    os.spawnl(os.P_DETACH, 
-                r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\{0}\deploy\League of Legends.exe".format(PC_LOL_VERSION),
-                "8394",
-                "LoLLauncher.exe",
-                "",
-                "spectator {0} {1} {2} {3}".format( ip_and_port, encryption_key, game_id, server ))
-
-
-    pass
-
-stack = []
-
-def lookupPlayer( player ):
-    for summoner in players.PLAYERS[player]:
-        res = get_active_game( summoner )
-        if res != None:
-            stack.append( summoner )
-#             print( stack.pop(0) )
-            print( summoner )
-            print( res )
-    pass
-
-
-def test():
-#     with concurrent.futures.ThreadPoolExecutor(max_workers=25) as executor:
-#         for x in range(0, 6):
-#             future_to_sleep = {executor.submit(sleep) }
-#         for future in concurrent.futures.as_completed( future_to_sleep ):
-#             data = future.result()
-#             print(data)
-#         
-#     pass
-
-    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
-        for player in players.PLAYERS:
-            future_to_sleep = {executor.submit(lookupPlayer, player) }
-    
-#     while not stack:
-#         print( stack.index(0) )
-#     pass
-    
-    pass
-
-
 def test2():
+    url = main.build_static_api_url(r"/v1.2/champion/103")
+    print( url )
+    print( main.get_json(url) )
     
-    
-    
+#     player, account, game_info = main.get_next_game()
+#     id = get_champion_id_by_name( "cRs voyboy", game_info['game']['playerChampionSelections']['array'] )
+#     if id:
+#         print( str(id) )
     pass
-    
-    
 
-# main()
-# time.sleep(5)# end()
-os_specific_init()
+def get_champion_id_by_name( name, team ):
+    
+    internal_name = main.stripSpaceAndLower(name)
+    for player in team:
+        if player['summonerInternalName'] == internal_name:
+            return player['championId']
+    return None
+
+def get_champion_name_by_id( id ):
+     url = main.build_static_api_url(r"/v1.2/champion/103")
+     print( main.get_json(url) )
+
 test2();

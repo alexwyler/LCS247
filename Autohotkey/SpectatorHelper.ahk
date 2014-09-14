@@ -52,7 +52,7 @@
 	} else {
 		Loop, 5
 		{
-			end {F2 down}{F2 up}
+			Send {F2 down}{F2 up}
 			Sleep 50
 		}
 		if index = 0 
