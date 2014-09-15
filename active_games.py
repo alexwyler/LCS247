@@ -66,16 +66,16 @@ def get_personality_from_account( account_name ):
                 return personality
             
 def update():
+    hyped_players = players.get_accounts_with_hype()
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         futures = [ executor.submit( lookup_account, players.get_personality_for_account_name(account), account ) 
-                   for account in players.get_accounts_with_hype() ]
+                   for account in  hyped_players]
                      
         result = concurrent.futures.wait( futures )
         
 #         for completed in result.done:
 #             print( completed )
-             
-        #print( "size: " + str(len(ACTIVE_PERSONALITIES)))
+        print("Completed scan of " + str(len(hyped_players)) + " hyped players. " + str(len(ACTIVE_PERSONALITIES)) + " found in game...")
 
 def update_runner():
     while True:

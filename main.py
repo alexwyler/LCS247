@@ -13,8 +13,6 @@ import api
 import util
 import active_games
 
-GAME_TYPES = ['RANKED_SOLO_5x5']
-
 IN_GAME_PING_FREQUENCY = 5
 SPECTATOR_DELAY = 3 * 60
 START_TIME = time.time()
@@ -30,7 +28,7 @@ def main():
         print('Searching for suitable games...')
         selected_game_details = get_best_suitable_game()
         if not selected_game_details:
-            print('No suitable games found...')
+            pass
         else:
             personality_name, account, game_info = selected_game_details
             spectate_info = game_info['playerCredentials'];
@@ -57,7 +55,7 @@ def main():
              
             print("Killing game..")
             league_runner.kill_game()
-        time.sleep(10)
+        time.sleep(20)
 
 def get_best_suitable_game():
     personalities_by_hype = players.get_personality_names_ordered_by_hype()
@@ -72,6 +70,10 @@ def get_best_suitable_game():
             time_since_init = time.time() - START_TIME
             if (time_since_init > 3 * 60 and time_since_start < 3 * 60) or time_since_start > 10 * 60:
                 print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
+                continue
+        
+            if game_info['game']['queueTypeName'] != 'RANKED_SOLO_5x5':
+                print(personality_name + " game not ranked 5s!")
                 continue
             
             return (personality_name, account, game_info)
