@@ -72,11 +72,11 @@ def get_best_suitable_game():
             time_since_start = time.time() - start_time
             
             if (config.CONTEXT_UTIL.get("enforce_spectator_delay_after_start") and time_since_start < 3 * 60) or time_since_start > 10 * 60:
-                print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
+#                print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
                 continue
         
             if game.type != 'Ranked Solo 5v5' and config.CONTEXT_UTIL.get("enforce_solo_queue"):
-                print(personality_name + " game not ranked 5s!")
+#                print(personality_name + " game not ranked 5s!")
                 continue
             
             return (personality_name, account, game)
