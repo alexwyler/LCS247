@@ -11,9 +11,11 @@ import api
 import util
 import active_games
 import config
+import players
 
 IN_GAME_PING_FREQUENCY = 5
 START_TIME = time.time()
+SELECTED_GAME_DETAILS = None
 
 def init():
     config.init()
@@ -24,33 +26,34 @@ def main():
     init()
     
     while True:
-        print('[ main ]\t Searching for suitable games...')
+        print('[ main ]\t Waiting for a suitable game...')
         # reduce search delay while we search for new games
         active_games.SEARCH_DELAY = 10
         while True:
-            selected_game_details = get_best_suitable_game()
-            if not selected_game_details:
+            SELECTED_GAME_DETAILS = get_best_suitable_game()
+            if not SELECTED_GAME_DETAILS:
                 time.sleep(1)
             else:
                 break
 
         # increase search delay while we have a game
         active_games.SEARCH_DELAY = 120
-        personality_name, account, _, game = selected_game_details
+        personality_name, account, _, game = SELECTED_GAME_DETAILS
         print("[ main ]\t Chose {0} game, playing on {1}...".format(personality_name, account))
+        players.hype_personality(personality_name, 10)
         
-        team, position = util.get_player_position(account, game)
+        team, position = util.get_player_position(account[0], game)
         team_str = str(team).join(str(team).split()).lower()
         
         if not config.CONTEXT_UTIL.get("skip_launch"):
-            print("[ main ]\t Launching game...")
+            print("[ main ]\t Launching game...")   
             league_runner.open_game(game, team_str, position)
         
         update_twitch_channel(personality_name, account, game)
         print("[ main ]\t Waiting for game to end...")
         while True:
             try:
-                if not api.get_active_game(account): 
+                if not api.get_active_game(account):
                     break
             except Exception:
                 pass
@@ -72,7 +75,7 @@ def get_best_suitable_game():
         return None
 
 def update_twitch_channel(player, account, game):
-    champ_name = game.get_champion(account)
+    champ_name = game.get_champion(account[0])
     title = 'LCS Players 24/7: {0} Playing {1}'.format(player, champ_name)
     print('[ main ]\t Updating twitch stream to: "{0}"...'.format(title))
     twitch.update_channel_title(title)

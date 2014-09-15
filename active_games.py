@@ -9,6 +9,7 @@ import time
 import util
 import datetime
 import config
+import traceback
 
 import api
 import players
@@ -54,8 +55,9 @@ def lookup_account( personality, account ):
             lock.release()
     except Exception as e:
         pass
+        print(account)
         print('[ search ]\t Error looking up game: ' + str(e))
-        #traceback.print_exc()
+        traceback.print_exc()
 
 #             
 
@@ -79,10 +81,10 @@ def get_personality_from_account( account_name ):
                 return personality
             
 def update():
-    hyped_players = players.get_accounts_with_hype()
+    hyped_accounts = players.get_accounts_with_hype()
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         futures = [ executor.submit( lookup_account, players.get_personality_for_account_name(account), account ) 
-                   for account in  hyped_players]
+                   for account in  hyped_accounts]
                      
         concurrent.futures.wait( futures )
         
@@ -105,6 +107,7 @@ def update():
 #        print("Completed scan of " + str(len(hyped_players)) + " hyped players. " + str(len(ACTIVE_PERSONALITIES)) + " found in game...")
 
 def update_runner():
+    print('[ search ]\t Searching for active games...')
     while True:
         update()
         time.sleep(SEARCH_DELAY)
@@ -133,7 +136,6 @@ def get_suitable_games_in_order():
             
             suitable_games.append((personality_name, account, personality['hype'], game))
             
-            break
     finally:
         lock.release()
     

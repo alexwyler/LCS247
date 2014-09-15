@@ -16,10 +16,10 @@ def safe_str(string):
     except TypeError:
         return str(string)
 
-def get_player_position( account, game ):
+def get_player_position( account_name, game ):
     team_1 = game.blue_team
     team_2 = game.purple_team
-    return find_player_by_name( account, team_1, team_2 )
+    return find_player_by_name( account_name, team_1, team_2 )
 
 def to_clean_name(account_name):
     return account_name.replace(" ", "").lower()

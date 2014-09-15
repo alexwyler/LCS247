@@ -24,7 +24,7 @@ GAME_TIME_RE = re.compile('data-game-time="(.*)"')
 SPECTATOR_DATA_RE = re.compile('href="lrf://spectator (.*):(.*) (.*) (.*) (.*) (.*)"')
 
 # 1 - account name
-PLAYER_RE = re.compile('<a href="http://na.op.gg/summoner/userName=(.*)" target="outbound"')
+PLAYER_RE = re.compile('\\.op\\.gg/summoner/userName=(.*)" target="outbound"')
 CHAMPION_NAME_RE = re.compile('<span>(.*)\r\\s+\\(<b class="num-games tip"')
 QUEUE_RE = re.compile("Summoner&#x27;s Rift, (.*) - ")
 
@@ -53,8 +53,10 @@ def build_api_url(path, params=None):
     return RIOT_BASE_URL + path + '?' + parse.urlencode(params)
 
 def get_game_info_from_lolnexus(account):
-    data = parse.urlencode({'name': account}).encode('utf-8')
-    req = request.Request('http://www.lolnexus.com/ajax/get-game-info/NA.json?name={0}'.format(account), data=data)
+    if account[1] == 'KR':
+        return None
+    data = parse.urlencode({'name': account[0]}).encode('utf-8')
+    req = request.Request('http://www.lolnexus.com/ajax/get-game-info/{0}.json?name={1}'.format(account[1], account[0]), data=data)
     response = get_json(req)
     if not response.get('successful'):
         return None
@@ -111,5 +113,5 @@ def get_game_info_from_lolnexus(account):
     return game
     
 if __name__ == '__main__':
-    print(get_game_info_from_lolnexus('Imaqtpie'))
+    print(get_game_info_from_lolnexus(('Imaqtpie', 'NA')))
     

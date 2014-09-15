@@ -3,7 +3,9 @@ import threading
 import time
 import players
 import active_games
+import traceback
 import re
+import main
  
 #sets variables for connection to twitch chat
 bot_owner = b'LCS247'
@@ -20,9 +22,10 @@ newsmsg = 'No news set'
 
 MESSAGE_PATTERN = re.compile(':(.*)!(.*)@(.*).tmi.twitch.tv PRIVMSG #lcs247 :(.*)', re.IGNORECASE)
 
-HYPE_COMMAND = re.compile('hype (.*)')
+HYPE_COMMAND = re.compile('hype ([^,]*)(,(.*))?')
 SHOW_PLAYERS = re.compile('show players')
 HYPE_STANDARDS = re.compile('hype_standards')
+SKIP_COMMAND = re.compile('skip')
     
 def init():
 
@@ -41,41 +44,58 @@ def init():
         irc.send(bytes("JOIN #lcs247\r\n", "UTF-8"));
         print('[ irc bot ]\t Listening for commands...')
         while True:
-            readbuffer = readbuffer+irc.recv(1024).decode("UTF-8")
-            temp = str.split(readbuffer, "\n")
-            readbuffer=temp.pop( )
-            
-            for line in temp:
-                m = MESSAGE_PATTERN.match(line)
-                if m:
-                    user, message = m.group(1, 4)
-                    
-                    hype_m = HYPE_COMMAND.match(message)
-                    if hype_m:
-                        player = hype_m.group(1).strip()
-                        players.hype_personality(player, 1) 
-                        personality = players.get_personality(player)
-                        message = "{0} hypes {1} to {2}!".format(user, personality['name'], personality['hype'])
-                        print('[ irc bot ]\t {0}'.format(message))
-                        send_message(message)
-                    
-                    show_m = SHOW_PLAYERS.search(message)
-                    if show_m:
-                        suitable_games = active_games.get_suitable_games_in_order()
-                        if suitable_games:
-                            send_message("--- Players in Game ---")
-                            for suitable_game in suitable_games:
-                                personality_name, account, score, game = suitable_game
-                                send_message("({0}) {1} on {2}".format(score, personality_name, game.get_champion(account)))
-                        else:
-                            send_message("No players in new games!")
-                    
-                    if user == 'lcs247' and HYPE_STANDARDS.search(message):
-                        print('[ irc bot ]\t {0}'.format("Hyping standard players..."))
-                        players.hype_standards()
+            try:
+                readbuffer = readbuffer+irc.recv(1024).decode("UTF-8")
+                temp = str.split(readbuffer, "\n")
+                readbuffer=temp.pop( )
+                
+                for line in temp:
+                    m = MESSAGE_PATTERN.match(line)
+                    if m:
+                        user, message = m.group(1, 4)
+                        print('[ irc bot ]\t {0}: {1}'.format(user, message))
+                        hype_m = HYPE_COMMAND.search(message)
+                        if hype_m:
+                            player = hype_m.group(1).strip()
+                            region = (hype_m.group(3) or 'NA').strip()
+                            players.hype_personality((player, region), 1) 
+                            personality = players.get_personality(player)
+                            message = "{0} hypes {1} to {2}!".format(user, personality['name'], personality['hype'])
+                            print('[ irc bot ]\t {0}'.format(message))
+                            send_message(message)
                         
-
-            time.sleep(1)
+                        show_m = SHOW_PLAYERS.search(message)
+                        if show_m:
+                            suitable_games = active_games.get_suitable_games_in_order()
+                            if suitable_games:
+                                send_message("--- Players in Game ---")
+                                for suitable_game in suitable_games:
+                                    personality_name, account, score, game = suitable_game
+                                    send_message("({0}) {1} on {2}".format(score, personality_name, game.get_champion(account)))
+                            else:
+                                send_message("No players in new games!")
+                        
+                        if user == 'lcs247' and HYPE_STANDARDS.search(message):
+                            print('[ irc bot ]\t {0}'.format("Hyping standard players..."))
+                            players.hype_standards()
+                            
+                        if (SKIP_COMMAND.search(message)):
+                            if main.SELECTED_GAME_DETAILS:
+                                personality_name, account, _, game = main.SELECTED_GAME_DETAILS
+                                players.hype_personality(personality_name, -1)
+                                personality = players.get_personality(personality_name)
+                                if personality['hype'] <= 0:
+                                    send_message('Skipping current game!')
+                                    main.SELECTED_GAME_DETAILS = None
+                                else:
+                                    send_message("De-hyping {0} to {1}. Get him to 0 to skip".format(personality_name, personality['score']))
+                            else:
+                                send_message("No active game...")
+    
+                time.sleep(1)
+            except Exception as e:
+                print(str(e))
+                traceback.print_exc()
 
     t = threading.Thread(target=process)
     t.start()
