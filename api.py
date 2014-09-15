@@ -107,8 +107,9 @@ def get_game_info_from_lolnexus(account):
     game.blue_team = blue_team
     game.purple_team = purple_team
     game.type = game_type
+    
     return game
     
 if __name__ == '__main__':
-    print(get_game_info_from_lolnexus('Rakin'))
+    print(get_game_info_from_lolnexus('Imaqtpie'))
     

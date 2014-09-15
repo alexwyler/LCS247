@@ -6,6 +6,7 @@ Created on Sep 12, 2014
 import concurrent.futures
 import threading
 import time
+import datetime
 
 import api
 import players
@@ -37,8 +38,9 @@ def lookup_account( personality, account ):
             
             accounts_to_games = ACTIVE_ACCOUNTS[personality_name]
             if game:
+                duration = str(datetime.timedelta(seconds=int(int(time.time() - game.start_time))))
                 if account not in accounts_to_games:
-                    print("[ search ]\t New game, " + personality_name )
+                    print("[ search ]\t New game, " + personality_name + ", " + game.type + ", " + duration)
                     accounts_to_games[account] = (account, time.time(), game)
             else:
                 if account in accounts_to_games:

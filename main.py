@@ -28,7 +28,7 @@ def main():
     while True:
         print('[ main ]\t Searching for suitable games...')
         # reduce search delay while we search for new games
-        active_games.SEARCH_DELAY = 0
+        active_games.SEARCH_DELAY = 10
         while True:
             selected_game_details = get_best_suitable_game()
             if not selected_game_details:
@@ -72,10 +72,10 @@ def get_best_suitable_game():
             active_game_info = active_games.ACTIVE_PERSONALITIES.get(personality_name)
             if not active_game_info:
                 continue
-            (account, start_time, game) = active_game_info
-            time_since_start = time.time() - start_time
+            (account, _, game) = active_game_info
+            time_since_start = time.time() - game.start_time
             
-            if (config.CONTEXT_UTIL.get("enforce_spectator_delay_after_start") and time_since_start < 3 * 60) or time_since_start > 10 * 60:
+            if time_since_start < SPECTATOR_DELAY or time_since_start > 10 * 60:
 #                print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
                 continue
         
