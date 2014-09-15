@@ -44,7 +44,7 @@ def main():
             print("Waiting for game to end...")
             while True:
                 try:
-                    if api.get_active_game(account): 
+                    if not api.get_active_game(account): 
                         break
                 except Exception:
                     pass
