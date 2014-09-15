@@ -70,7 +70,8 @@ def get_best_suitable_game():
             (account, start_time, game_info) = active_game_info
             time_since_start = time.time() - start_time
             time_since_init = time.time() - START_TIME
-            if (time_since_init > 3 * 60 and time_since_start < 3 * 60) or time_since_start > 10 * 60:
+            CHECK_FOR_FULL_GAMES = False
+            if (CHECK_FOR_FULL_GAMES and time_since_init > 3 * 60 and time_since_start < 3 * 60) or time_since_start > 10 * 60:
                 print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
                 continue
         
