@@ -3,7 +3,6 @@ Created on Sep 12, 2014
 
 @author: alexwyler
 '''
-import collections
 import concurrent.futures
 import threading
 import time
@@ -28,16 +27,14 @@ def lookup_account( personality, account ):
 #         print( "Looking up: " + account )
         game = api.get_game_info_from_lolnexus( account )
         personality_name = personality['name']
-        # initialize dict
         lock.acquire()
         try:
+            # initialize dict
             if not personality_name in ACTIVE_ACCOUNTS:
                 ACTIVE_ACCOUNTS[personality_name] = {}
             
             accounts_to_games = ACTIVE_ACCOUNTS[personality_name]
             if game:
-                print( "account: " + account )
-                print( "personality:" + personality['name'] )
                 if account not in accounts_to_games:
                     print("--- New Game --- " + personality_name )
                     accounts_to_games[account] = (account, time.time(), game)
@@ -102,7 +99,7 @@ def update():
 def update_runner():
     while True:
         update()
-        time.sleep(1)
+        time.sleep(5)
         
 def init():
     
