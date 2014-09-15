@@ -13,8 +13,7 @@ global DB_PATH
 
 def lazy_init():
     global DB_PATH
-    DB_PATH = os.path.dirname(__file__) + os.pathsep + 'players.db'
-    print(DB_PATH)
+    DB_PATH = os.path.dirname(__file__) + os.sep + 'players.db'
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='personalities'")
