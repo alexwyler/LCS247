@@ -26,4 +26,3 @@ class Game:
             if player_info['account'] == account:
                 return player_info['champion']
             
-        

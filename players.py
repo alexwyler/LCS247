@@ -91,13 +91,13 @@ def get_personality_for_name(name):
     conn.close()
     return personality
 
-def get_personality_names_ordered_by_hype():
+def get_personalities_by_hype():
     conn = get_conn()
     cursor=conn.cursor()
-    cursor.execute("SELECT name FROM personalities WHERE hype > 0 ORDER BY hype DESC")
+    cursor.execute("SELECT * FROM personalities WHERE hype > 0 ORDER BY hype DESC")
     personalities = cursor.fetchall()
     conn.close()
-    return [personality['name'] for personality in personalities]
+    return personalities
 
 def get_accounts_with_hype():
     conn = get_conn()

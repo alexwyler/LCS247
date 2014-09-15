@@ -5,6 +5,8 @@ Created on Sep 14, 2014
 '''
 import sys
 
+SPECTATOR_DELAY = 3 * 60
+
 def safe_str(string):
     if isinstance(string, str):
         return string

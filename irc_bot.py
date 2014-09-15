@@ -2,6 +2,7 @@ import socket
 import threading
 import time
 import players
+import active_games
 import re
  
 #sets variables for connection to twitch chat
@@ -30,8 +31,8 @@ def init():
         irc = socket.socket()
         irc.connect((server, 6667)) #connects to the server
         
-        def send_message(message):
-            irc.send(bytes('PRIVMSG #lcs247 :{0}\r\n'.format(message), 'UTF-8'))
+        def send_message(msg):
+            irc.send(bytes('PRIVMSG #lcs247 :{0}\r\n'.format(msg), 'UTF-8'))
         
         #sends variables for connection to twitch chat
         irc.send(b'PASS ' + password + b'\r\n')
@@ -58,11 +59,18 @@ def init():
                         print('[ irc bot ]\t {0}'.format(message))
                         send_message(message)
                     
-                    show_m = SHOW_PLAYERS.match(message)
+                    show_m = SHOW_PLAYERS.search(message)
                     if show_m:
-                        pass
+                        suitable_games = active_games.get_suitable_games_in_order()
+                        if suitable_games:
+                            send_message("--- Players in Game ---")
+                            for suitable_game in suitable_games:
+                                personality_name, account, score, game = suitable_game
+                                send_message("({0}) {1} on {2}".format(score, personality_name, game.get_champion(account)))
+                        else:
+                            send_message("No players in new games!")
                     
-                    if user == 'lcs247' and HYPE_STANDARDS.match(message):
+                    if user == 'lcs247' and HYPE_STANDARDS.search(message):
                         print('[ irc bot ]\t {0}'.format("Hyping standard players..."))
                         players.hype_standards()
                         

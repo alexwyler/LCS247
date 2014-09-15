@@ -3,7 +3,6 @@ Created on Sep 12, 2014
 
 @author: alexwyler
 '''
-import players
 import league_runner
 import time
 import irc_bot
@@ -14,9 +13,7 @@ import active_games
 import config
 
 IN_GAME_PING_FREQUENCY = 5
-SPECTATOR_DELAY = 3 * 60
 START_TIME = time.time()
-GAME_TYPES = ['Normal 5v5', 'Ranked Solo 5v5']
 
 def init():
     config.init()
@@ -39,7 +36,7 @@ def main():
 
         # increase search delay while we have a game
         active_games.SEARCH_DELAY = 120
-        personality_name, account, game = selected_game_details
+        personality_name, account, _, game = selected_game_details
         print("[ main ]\t Chose {0} game, playing on {1}...".format(personality_name, account))
         
         team, position = util.get_player_position(account, game)
@@ -60,38 +57,19 @@ def main():
             time.sleep(IN_GAME_PING_FREQUENCY)
          
         print("[ main ]\t Game complete. Waiting for spectator delay...")
-        time.sleep(SPECTATOR_DELAY)
+        time.sleep(util.SPECTATOR_DELAY)
          
         print("[ main ]\t Killing game...")
         league_runner.kill_game()
         
         print("[ main ]\t Decaying hype...")
         
-
 def get_best_suitable_game():
-    personalities_by_hype = players.get_personality_names_ordered_by_hype()
-    active_games.lock.acquire()
-    try:
-        for personality_name in personalities_by_hype:
-            active_game_info = active_games.ACTIVE_PERSONALITIES.get(personality_name)
-            if not active_game_info:
-                continue
-            (account, _, game) = active_game_info
-            time_since_start = time.time() - game.start_time
-            
-            if time_since_start < SPECTATOR_DELAY or time_since_start > 10 * 60:
-#                print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
-                continue
-        
-            if game.type not in GAME_TYPES and config.CONTEXT_UTIL.get("enforce_solo_queue"):
-#                print(personality_name + " game not ranked 5s!")
-                continue
-            
-            return (personality_name, account, game)
-            
-            break
-    finally:
-        active_games.lock.release()
+    suitable_games = active_games.get_suitable_games_in_order()
+    if suitable_games:
+        return suitable_games[0]
+    else:
+        return None
 
 def update_twitch_channel(player, account, game):
     champ_name = game.get_champion(account)
