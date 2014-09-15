@@ -6,6 +6,7 @@ import active_games
 import traceback
 import re
 import main
+import plog
  
 #sets variables for connection to twitch chat
 bot_owner = b'LCS247'
@@ -42,7 +43,7 @@ def init():
         irc.send(b'USER ' + nick + b' 0 * :' + bot_owner + b'\r\n')
         irc.send(b'NICK ' + nick + b'\r\n')
         irc.send(bytes("JOIN #lcs247\r\n", "UTF-8"));
-        print('[ irc bot ]\t Listening for commands...')
+        log('Listening for commands...')
         while True:
             try:
                 readbuffer = readbuffer+irc.recv(1024).decode("UTF-8")
@@ -53,7 +54,7 @@ def init():
                     m = MESSAGE_PATTERN.match(line)
                     if m:
                         user, message = m.group(1, 4)
-                        print('[ irc bot ]\t {0}: {1}'.format(user, message))
+                        print('{0}: {1}'.format(user, message))
                         hype_m = HYPE_COMMAND.search(message)
                         if hype_m:
                             player = hype_m.group(1).strip()
@@ -61,7 +62,7 @@ def init():
                             players.hype_personality((player, region), 1) 
                             personality = players.get_personality(player)
                             message = "{0} hypes {1} to {2}!".format(user, personality['name'], personality['hype'])
-                            print('[ irc bot ]\t {0}'.format(message))
+                            log(message)
                             send_message(message)
                         
                         show_m = SHOW_PLAYERS.search(message)
@@ -76,7 +77,7 @@ def init():
                                 send_message("No players in new games!")
                         
                         if user == 'lcs247' and HYPE_STANDARDS.search(message):
-                            print('[ irc bot ]\t {0}'.format("Hyping standard players..."))
+                            log('Hyping standard players...')
                             players.hype_standards()
                             
                         if (SKIP_COMMAND.search(message)):
@@ -96,9 +97,14 @@ def init():
             except Exception as e:
                 print(str(e))
                 traceback.print_exc()
+            
+        log('Exiting loop!')
 
     t = threading.Thread(target=process)
     t.start()
     
+def log(message):
+    plog.log('irc bot', message)
+
 if __name__ == '__main__':
     init()

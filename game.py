@@ -3,6 +3,7 @@ Created on Sep 15, 2014
 
 @author: alexwyler
 '''
+import util
 
 class Game:
     
@@ -23,6 +24,6 @@ class Game:
     
     def get_champion(self, account):
         for player_info in self.blue_team + self.purple_team:
-            if player_info['account'] == account:
+            if util.to_clean_name(player_info['account']) == util.to_clean_name(account):
                 return player_info['champion']
             

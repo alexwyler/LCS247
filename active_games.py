@@ -10,6 +10,7 @@ import util
 import datetime
 import config
 import traceback
+import plog
 
 import api
 import players
@@ -45,18 +46,18 @@ def lookup_account( personality, account ):
             if game:
                 duration = str(datetime.timedelta(seconds=int(int(time.time() - game.start_time))))
                 if account not in accounts_to_games:
-                    print("[ search ]\t New game, " + personality_name + ", " + game.type + ", " + duration)
+                    log("New game, " + personality_name + ", " + game.type + ", " + duration)
                     accounts_to_games[account] = (account, time.time(), game)
             else:
                 if account in accounts_to_games:
-                    print("[ search ]\t Deleting game, " + personality_name )
+                    log("Deleting game, " + personality_name )
                     accounts_to_games.pop(account, None)
         finally:
             lock.release()
     except Exception as e:
         pass
         print(account)
-        print('[ search ]\t Error looking up game: ' + str(e))
+        log('Error looking up game: ' + str(e))
         traceback.print_exc()
 
 #             
@@ -107,7 +108,7 @@ def update():
 #        print("Completed scan of " + str(len(hyped_players)) + " hyped players. " + str(len(ACTIVE_PERSONALITIES)) + " found in game...")
 
 def update_runner():
-    print('[ search ]\t Searching for active games...')
+    log('Searching for active games...')
     while True:
         update()
         time.sleep(SEARCH_DELAY)
@@ -140,6 +141,9 @@ def get_suitable_games_in_order():
         lock.release()
     
     return suitable_games        
+
+def log(message):
+    plog.log('search', message)
 
 def init():
     
