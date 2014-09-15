@@ -41,6 +41,7 @@ def lookup_account( personality, account ):
             #print("--- Delete" + personality_name )
             ACTIVE_PERSONALITIES.pop(personality_name, None)
     except Exception as e:
+        pass
         #print('Error looking up game: ' + str(e))
         #traceback.print_exc()
 

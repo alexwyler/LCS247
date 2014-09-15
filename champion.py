@@ -3,8 +3,6 @@ Created on Sep 12, 2014
 
 @author: alexwyler
 '''
-
-import main
 import util
 import api
 
@@ -26,13 +24,3 @@ def get_champion_id_by_name( name, team ):
 def get_champion_name_by_id( ident ):
     json = api.get_json( api.build_api_url("/static-data/na/v1.2/champion/" + str(ident) ) )
     return json['name']
-
-def init():
-    player, _, game_info = main.get_next_game()
-    name = get_champion_name_from_game_info( player, game_info)
-    
-    print( name )
-    pass
-
-if __name__ == "__main__":
-    init();
