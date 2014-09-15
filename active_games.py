@@ -14,6 +14,8 @@ ACTIVE_PERSONALITIES = {}
 ACTIVE_ACCOUNTS = {}
 lock = threading.Lock()
 
+SEARCH_DELAY = 5
+
 def get_tracked_list():
     tracked_list = [];
     for player in players.PLAYERS:
@@ -99,7 +101,7 @@ def update():
 def update_runner():
     while True:
         update()
-        time.sleep(5)
+        time.sleep(SEARCH_DELAY)
         
 def init():
     

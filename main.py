@@ -28,6 +28,8 @@ def main():
     
     while True:
         print('[ main ]\t Searching for suitable games...')
+        # reduce search delay while we search for new games
+        active_games.SEARCH_DELAY = 0
         while True:
             selected_game_details = get_best_suitable_game()
             if not selected_game_details:
@@ -35,6 +37,8 @@ def main():
             else:
                 break
 
+        # increase search delay while we have a game
+        active_games.SEARCH_DELAY = 120
         personality_name, account, game = selected_game_details
         print("[ main ]\t Chose {0} game, playing on {1}...".format(personality_name, account))
         
