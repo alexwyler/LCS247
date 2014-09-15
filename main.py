@@ -16,6 +16,7 @@ import config
 IN_GAME_PING_FREQUENCY = 5
 SPECTATOR_DELAY = 3 * 60
 START_TIME = time.time()
+GAME_TYPES = ['Normal 5v5', 'Ranked Solo 5v5']
 
 def init():
     config.init()
@@ -79,7 +80,7 @@ def get_best_suitable_game():
 #                print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
                 continue
         
-            if game.type != 'Ranked Solo 5v5' and config.CONTEXT_UTIL.get("enforce_solo_queue"):
+            if game.type in GAME_TYPES and config.CONTEXT_UTIL.get("enforce_solo_queue"):
 #                print(personality_name + " game not ranked 5s!")
                 continue
             
