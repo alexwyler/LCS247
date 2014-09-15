@@ -54,12 +54,14 @@ def open_game_mac(spectate_info, team_str, position):
     
     return subprocess.Popen(full_cmd, stderr = devnull)
 
-'''player locator
+'''
+player locator
+is_team_1 and index must be strings
 '''
 def startAutohotkey( is_team_1, index):
     
-    subprocess.call([r""+config.CONTEXT_UTIL['ahk_path'],
-                     r""+config.CONTEXT_UTIL['ahk_spectator_path'],
+    subprocess.call([config.CONTEXT_UTIL['ahk_path'],
+                     config.CONTEXT_UTIL['ahk_spectator_path'],
                      is_team_1,
                      index])
     pass
@@ -91,3 +93,8 @@ def get_champion_id_by_name( name, team ):
         if player['summonerInternalName'] == internal_name:
             return player['championId']
     return None
+
+
+# if __name__ == "__main__":
+#     config.init()
+#     startAutohotkey(str("false"), str(3))

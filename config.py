@@ -25,4 +25,6 @@ def init():
     print("Config finished initializing")
 
 
+# if __name__ == "__main__":
+#     init();
 #    USAGE: CONTEXT_UTIL['ahk_path']
