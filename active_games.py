@@ -44,7 +44,6 @@ def lookup_account( personality, account ):
         pass
         #print('Error looking up game: ' + str(e))
         #traceback.print_exc()
-        pass
 
 #             
 
