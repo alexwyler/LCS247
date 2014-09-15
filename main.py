@@ -75,9 +75,9 @@ def get_best_suitable_game():
                 print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
                 continue
         
-#             if game_info['game']['queueTypeName'] != 'RANKED_SOLO_5x5':
-#                 print(personality_name + " game not ranked 5s!")
-#                 continue
+            if game_info['game']['queueTypeName'] != 'RANKED_SOLO_5x5':
+                print(personality_name + " game not ranked 5s!")
+                continue
             
             return (personality_name, account, game_info)
             
