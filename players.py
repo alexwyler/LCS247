@@ -6,10 +6,15 @@ Created on Sep 12, 2014
 import collections
 import sqlite3
 import util
+import os
 
 POPULAR_PLAYERS = collections.OrderedDict()
+global DB_PATH
 
 def lazy_init():
+    global DB_PATH
+    DB_PATH = os.path.dirname(__file__) + os.pathsep + 'players.db'
+    print(DB_PATH)
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='personalities'")
@@ -18,6 +23,7 @@ def lazy_init():
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='accounts'")
     if not cursor.fetchone():
         init_data()
+    
 
 def create_personality(name, region='NA'):
     conn = get_conn()
@@ -50,7 +56,7 @@ def dict_factory(cursor, row):
     return d
         
 def get_conn():
-    conn = sqlite3.connect('players.db')
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = dict_factory
     return conn
 
