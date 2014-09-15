@@ -20,3 +20,10 @@ class Game:
         
     def __str__(self):
         return str(self.__dict__)
+    
+    def get_champion(self, account):
+        for player_info in self.blue_team + self.purple_team:
+            if player_info['account'] == account:
+                return player_info['champion']
+            
+        

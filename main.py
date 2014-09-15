@@ -6,7 +6,6 @@ Created on Sep 12, 2014
 import players
 import league_runner
 import time
-import champion
 import irc_bot
 import twitch
 import api
@@ -48,7 +47,8 @@ def main():
         if not config.CONTEXT_UTIL.get("skip_launch"):
             print("[ main ]\t Launching game...")
             league_runner.open_game(game, team_str, position)
-         
+        
+        update_twitch_channel(personality_name, account, game)
         print("[ main ]\t Waiting for game to end...")
         while True:
             try:
@@ -89,8 +89,8 @@ def get_best_suitable_game():
     finally:
         active_games.lock.release()
 
-def update_twitch_channel(player, account, game_info):
-    champ_name = champion.get_champion_name_from_game_info(account, game_info)
+def update_twitch_channel(player, account, game):
+    champ_name = game.get_champion(account)
     title = 'LCS Players 24/7: {0} Playing {1}'.format(player, champ_name)
     print('[ main ]\t Updating twitch stream to: "{0}"...'.format(title))
     twitch.update_channel_title(title)
