@@ -15,6 +15,9 @@ def lazy_init():
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='personalities'")
     if not cursor.fetchone():
         init_data()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='accounts'")
+    if not cursor.fetchone():
+        init_data()
 
 def create_personality(name, region='NA'):
     conn = get_conn()
