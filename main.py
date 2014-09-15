@@ -28,34 +28,37 @@ def main():
     
     while True:
         print('Searching for suitable games...')
-        selected_game_details = get_best_suitable_game()
-        if not selected_game_details:
-            pass
-        else:
-            personality_name, account, game = selected_game_details
-            print("Found {0} game, playing on {1}...".format(personality_name, account))
-            
-            team, position = util.get_player_position(account, game)
-            team_str = str(team).join(str(team).split()).lower()
- 
-            if not config.CONTEXT_UTIL.get("skip_launch"):
-                league_runner.open_game(game, team_str, position)
-             
-            print("Waiting for game to end...")
-            while True:
-                try:
-                    if not api.get_active_game(account): 
-                        break
-                except Exception:
-                    pass
-                time.sleep(IN_GAME_PING_FREQUENCY)
-             
-            print("Game complete. Waiting for spectator delay...")
-            time.sleep(SPECTATOR_DELAY)
-             
-            print("Killing game...")
-            league_runner.kill_game()
-        time.sleep(20)
+        while True:
+            selected_game_details = get_best_suitable_game()
+            if not selected_game_details:
+                time.sleep(1)
+            else:
+                break
+
+        personality_name, account, game = selected_game_details
+        print("Chose {0} game, playing on {1}...".format(personality_name, account))
+        
+        team, position = util.get_player_position(account, game)
+        team_str = str(team).join(str(team).split()).lower()
+        
+        if not config.CONTEXT_UTIL.get("skip_launch"):
+            print("Launching game...")
+            league_runner.open_game(game, team_str, position)
+         
+        print("Waiting for game to end...")
+        while True:
+            try:
+                if not api.get_active_game(account): 
+                    break
+            except Exception:
+                pass
+            time.sleep(IN_GAME_PING_FREQUENCY)
+         
+        print("Game complete. Waiting for spectator delay...")
+        time.sleep(SPECTATOR_DELAY)
+         
+        print("Killing game...")
+        league_runner.kill_game()
 
 def get_best_suitable_game():
     personalities_by_hype = players.get_personality_names_ordered_by_hype()
@@ -65,18 +68,18 @@ def get_best_suitable_game():
             active_game_info = active_games.ACTIVE_PERSONALITIES.get(personality_name)
             if not active_game_info:
                 continue
-            (account, start_time, game_info) = active_game_info
+            (account, start_time, game) = active_game_info
             time_since_start = time.time() - start_time
             
             if (config.CONTEXT_UTIL.get("enforce_spectator_delay_after_start") and time_since_start < 3 * 60) or time_since_start > 10 * 60:
                 print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
                 continue
         
-            if game_info['game']['queueTypeName'] != 'RANKED_SOLO_5x5' and config.CONTEXT_UTIL.get("enforce_solo_queue"):
+            if game.type != 'Ranked Solo 5v5' and config.CONTEXT_UTIL.get("enforce_solo_queue"):
                 print(personality_name + " game not ranked 5s!")
                 continue
             
-            return (personality_name, account, game_info)
+            return (personality_name, account, game)
             
             break
     finally:

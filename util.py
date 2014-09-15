@@ -31,14 +31,14 @@ def print_utf8(unicode):
 def find_player_by_name( name, team_1, team_2 ):
     internal_name = to_clean_name(name)
     index = 0
-    for player in team_1:
-        if to_clean_name(player) == internal_name:
+    for player_info in team_1:
+        if to_clean_name(player_info['account']) == internal_name:
             return True, index
         index += 1
     
     index = 0
-    for player in team_2:
-        if to_clean_name(player) == internal_name:
+    for player_info in team_2:
+        if to_clean_name(player_info['account']) == internal_name:
             return False, index
         index += 1
     pass

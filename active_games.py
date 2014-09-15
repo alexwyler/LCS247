@@ -94,7 +94,7 @@ def update():
         
 #         for completed in result.done:
 #             print( completed )
-        print("Completed scan of " + str(len(hyped_players)) + " hyped players. " + str(len(ACTIVE_PERSONALITIES)) + " found in game...")
+#        print("Completed scan of " + str(len(hyped_players)) + " hyped players. " + str(len(ACTIVE_PERSONALITIES)) + " found in game...")
 
 def update_runner():
     while True:

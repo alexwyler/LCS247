@@ -16,6 +16,7 @@ class Game:
         self.start_time = None
         self.blue_team = None
         self.purple_team = None
+        self.type = None
         
     def __str__(self):
         return str(self.__dict__)

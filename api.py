@@ -26,6 +26,7 @@ SPECTATOR_DATA_RE = re.compile('href="lrf://spectator (.*):(.*) (.*) (.*) (.*) (
 # 1 - account name
 PLAYER_RE = re.compile('<a href="http://na.op.gg/summoner/userName=(.*)" target="outbound"')
 CHAMPION_NAME_RE = re.compile('<span>(.*)\r\\s+\\(<b class="num-games tip"')
+QUEUE_RE = re.compile("Summoner&#x27;s Rift, (.*) - ")
 
 MASHAPE_BASE_URL = "https://community-league-of-legends.p.mashape.com/api/v1.0/NA"
 
@@ -59,10 +60,18 @@ def get_game_info_from_lolnexus(account):
         return None
     
     html = response['html']
+    
+#     f1 = open('./testfile', 'w+', encoding='utf-8')
+#     f1.write(html)
+        
+    match = QUEUE_RE.search(html)
+    if not match:
+        return None
+    game_type = match.group(1)
+    
     match = GAME_TIME_RE.search(html)
     if not match:
         return None
-    
     start_time = int(match.group(1))
     
     match = SPECTATOR_DATA_RE.search(html)
@@ -97,8 +106,9 @@ def get_game_info_from_lolnexus(account):
     game.start_time = start_time
     game.blue_team = blue_team
     game.purple_team = purple_team
+    game.type = game_type
     return game
     
 if __name__ == '__main__':
-    print(get_game_info_from_lolnexus('KIoud'))
+    print(get_game_info_from_lolnexus('Rakin'))
     
