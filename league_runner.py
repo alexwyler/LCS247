@@ -33,22 +33,22 @@ def kill_game_pc():
     os.system( r'taskkill /F /IM "League of Legends.exe"' );
     pass
 
-def open_game(spectate_info, team_str, position):
+def open_game(game, team_str, position):
     if platform.system() != 'Darwin':
-        open_game_pc(spectate_info, team_str, position)
+        open_game_pc(game, team_str, position)
     else:
-        open_game_mac(spectate_info, team_str, position)
+        open_game_mac(game, team_str, position)
 
 '''
 Opens game on mac given the spectate_info and returns a handle on the process
 '''
-def open_game_mac(spectate_info, team_str, position):
+def open_game_mac(game, team_str, position):
     devnull = open(os.devnull, "w")
-    ip_and_port = str(spectate_info['observerServerIp']) + ':' + str(spectate_info['observerServerPort'])
+    ip_and_port = str(game.server) + ':' + str(game.port)
     cmd = '''
     cd /Applications/League\ of\ Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/{0}/deploy/LeagueOfLegends.app/Contents/MacOS/
     riot_launched=true "/Applications/League of Legends.app/Contents/LoL/RADS/solutions/lol_game_client_sln/releases/{0}/deploy/LeagueOfLegends.app/Contents/MacOS/LeagueofLegends" 8394 LoLLauncher "/Applications/League of Legends.app/Contents/LoL/RADS/projects/lol_air_client/releases/{1}/deploy/bin/LolClient" "spectator {2} {3} {4} {5}"
-    '''.format(MAC_LOL_VERSION, MAC_LOL_CLIENT_VERSION, ip_and_port, spectate_info['observerEncryptionKey'], spectate_info['gameId'], 'NA1')
+    '''.format(MAC_LOL_VERSION, MAC_LOL_CLIENT_VERSION, ip_and_port, game.key, game.game_id, game.region)
     
     full_cmd = ["bash", "-c", cmd]
     
@@ -66,13 +66,13 @@ def startAutohotkey( is_team_1, index):
                      index])
     pass
 
-def open_game_pc(spectate_info, team_str, position):
+def open_game_pc(game, team_str, position):
     os.chdir(r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.54\deploy")
     
-    def open_game(spectate_info):
-        ip_and_port = str(spectate_info['observerServerIp']) + ':' + str(spectate_info['observerServerPort'])
-        encryption_key = spectate_info['observerEncryptionKey']
-        game_id = spectate_info['gameId']
+    def open_game(game):
+        ip_and_port = str(game.server) + ':' + str(game.port)
+        encryption_key = game.key
+        game_id = game.game_id
         server = "NA1"
     
         return subprocess.call([r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\{0}\deploy\League of Legends.exe".format(PC_LOL_VERSION),
@@ -81,7 +81,7 @@ def open_game_pc(spectate_info, team_str, position):
                 "",
                 "spectator {0} {1} {2} {3}".format( ip_and_port, encryption_key, game_id, server )])
     
-    game_thread = threading.Thread( target=open_game, args = (spectate_info,) )
+    game_thread = threading.Thread( target=open_game, args = (game,) )
     game_thread.start()
     ahk_thread = threading.Thread( target=startAutohotkey, args = (team_str,str(position),) )
     ahk_thread.start()

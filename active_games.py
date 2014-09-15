@@ -7,13 +7,12 @@ import collections
 import concurrent.futures
 import threading
 import time
-import traceback
 
 import api
 import players
 
-
-ACTIVE_PERSONALITIES = collections.OrderedDict()
+ACTIVE_PERSONALITIES = {}
+ACTIVE_ACCOUNTS = {}
 lock = threading.Lock()
 
 def get_tracked_list():
@@ -27,22 +26,30 @@ def get_tracked_list():
 def lookup_account( personality, account ):
     try:
 #         print( "Looking up: " + account )
-        game_info = api.get_active_game( account )
+        game = api.get_game_info_from_lolnexus( account )
         personality_name = personality['name']
-        if game_info:
-            #print( "account: " + account )
-            #print( "game info: " + str(game_info))
-            #print( "personality:" + personality['name'] )
+        # initialize dict
+        lock.acquire()
+        try:
+            if not personality_name in ACTIVE_ACCOUNTS:
+                ACTIVE_ACCOUNTS[personality_name] = {}
             
-            if personality_name not in ACTIVE_PERSONALITIES:
-                print("--- Adding " + personality_name )
-                ACTIVE_PERSONALITIES[personality_name] = (account, time.time(), game_info)
-        else:
-            #print("--- Delete" + personality_name )
-            ACTIVE_PERSONALITIES.pop(personality_name, None)
+            accounts_to_games = ACTIVE_ACCOUNTS[personality_name]
+            if game:
+                print( "account: " + account )
+                print( "personality:" + personality['name'] )
+                if account not in accounts_to_games:
+                    print("--- New Game --- " + personality_name )
+                    accounts_to_games[account] = (account, time.time(), game)
+            else:
+                if account in accounts_to_games:
+                    print("--- Deleting Game --- " + personality_name )
+                    accounts_to_games.pop(account, None)
+        finally:
+            lock.release()
     except Exception as e:
         pass
-        #print('Error looking up game: ' + str(e))
+        print('Error looking up game: ' + str(e))
         #traceback.print_exc()
 
 #             
@@ -72,7 +79,21 @@ def update():
         futures = [ executor.submit( lookup_account, players.get_personality_for_account_name(account), account ) 
                    for account in  hyped_players]
                      
-        result = concurrent.futures.wait( futures )
+        concurrent.futures.wait( futures )
+        
+        lock.acquire()
+        try:
+            for personality_name in ACTIVE_ACCOUNTS:
+                has_game = False
+                for account in ACTIVE_ACCOUNTS[personality_name]:
+                    has_game = True
+                    ACTIVE_PERSONALITIES[personality_name] = ACTIVE_ACCOUNTS[personality_name][account]
+                if not has_game:
+                    ACTIVE_PERSONALITIES.pop(personality_name, None)
+            pass
+        finally:
+            lock.release()
+        
         
 #         for completed in result.done:
 #             print( completed )

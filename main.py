@@ -32,15 +32,14 @@ def main():
         if not selected_game_details:
             pass
         else:
-            personality_name, account, game_info = selected_game_details
+            personality_name, account, game = selected_game_details
             print("Found {0} game, playing on {1}...".format(personality_name, account))
             
-            spectate_info = game_info['playerCredentials'];
-            team, position = util.get_player_position(account, game_info)
+            team, position = util.get_player_position(account, game)
             team_str = str(team).join(str(team).split()).lower()
  
             if not config.CONTEXT_UTIL.get("skip_launch"):
-                league_runner.open_game(spectate_info, team_str, position)
+                league_runner.open_game(game, team_str, position)
              
             print("Waiting for game to end...")
             while True:

@@ -4,6 +4,7 @@ Created on Sep 14, 2014
 @author: alexwyler
 '''
 from urllib import request, parse
+from game import Game
 import json
 import util
 import re
@@ -86,18 +87,18 @@ def get_game_info_from_lolnexus(account):
             'champion': champion_matches[i + 5]
         })
     
-    return {
-        'server': server,
-        'port': port,
-        'key': key,
-        'game_id': game_id,
-        'region': region,
-        'version': version,
-        'start_time': start_time,
-        'blue_team': blue_team,
-        'purple_team': purple_team
-    }
+    game = Game()
+    game.server = server
+    game.port = port
+    game.key = key
+    game.game_id = game_id
+    game.region = region
+    game.version = version
+    game.start_time = start_time
+    game.blue_team = blue_team
+    game.purple_team = purple_team
+    return game
     
 if __name__ == '__main__':
-    print(get_game_info_from_lolnexus('Doreeb'))
+    print(get_game_info_from_lolnexus('KIoud'))
     
