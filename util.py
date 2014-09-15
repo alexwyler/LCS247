@@ -3,6 +3,7 @@ Created on Sep 14, 2014
 
 @author: alexwyler
 '''
+import sys
 
 def safe_str(string):
     if isinstance(string, str):
@@ -21,6 +22,11 @@ def get_player_position( account, running_game_info ):
 def to_clean_name(account_name):
     return account_name.replace(" ", "").lower()
 
+def print_utf8(unicode):
+    if isinstance(unicode, str):
+        unicode = unicode.encode("utf-8")
+    sys.stdout.buffer.write(unicode + b'\r\n')
+
 #returns is found on team 1 and position
 def find_player_by_name( name, team_1, team_2 ):
     internal_name = to_clean_name(name)
@@ -36,3 +42,6 @@ def find_player_by_name( name, team_1, team_2 ):
             return False, index
         index += 1
     pass
+
+if __name__ == '__main__':
+    print_utf8("→")

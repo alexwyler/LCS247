@@ -22,7 +22,7 @@ def init():
     config.read( CONFIG_FILE_PATH )
     for section in config.sections():
         init_sction_map(section, config)
-    print("Config finished initializing")
+    print("Config finished initializing...")
 
 
 # if __name__ == "__main__":
