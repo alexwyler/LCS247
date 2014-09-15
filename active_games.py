@@ -26,7 +26,7 @@ def get_tracked_list():
 
 def lookup_account( personality, account ):
     try:
-        print( "Looking up: " + account )
+#         print( "Looking up: " + account )
         game_info = api.get_active_game( account )
         personality_name = personality['name']
         if game_info:
@@ -44,6 +44,7 @@ def lookup_account( personality, account ):
         pass
         #print('Error looking up game: ' + str(e))
         #traceback.print_exc()
+        pass
 
 #             
 

@@ -8,6 +8,7 @@ import os
 import platform
 import subprocess
 import util
+import config
 
 MAC_LOL_VERSION = "0.0.0.133"
 MAC_LOL_CLIENT_VERSION = "0.0.0.144"
@@ -57,8 +58,8 @@ def open_game_mac(spectate_info, team_str, position):
 '''
 def startAutohotkey( is_team_1, index):
     
-    subprocess.call([r"C:\Program Files (x86)\AutoHotkey\AutoHotkey.exe",
-                     r"C:\Users\Aleesa\Documents\GitHub\LCS247\Autohotkey\SpectatorHelper.ahk",
+    subprocess.call([r""+config.CONTEXT_UTIL['ahk_path'],
+                     r""+config.CONTEXT_UTIL['ahk_spectator_path'],
                      is_team_1,
                      index])
     pass

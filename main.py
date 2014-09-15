@@ -11,6 +11,7 @@ import irc_bot
 import twitch
 import api
 import util
+import config
 import active_games
 
 IN_GAME_PING_FREQUENCY = 5
@@ -18,6 +19,7 @@ SPECTATOR_DELAY = 3 * 60
 START_TIME = time.time()
 
 def init():
+    config.init()
     irc_bot.init()
     active_games.init()
 
