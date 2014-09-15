@@ -21,6 +21,7 @@ MESSAGE_PATTERN = re.compile(':(.*)!(.*)@(.*).tmi.twitch.tv PRIVMSG #lcs247 :(.*
 
 HYPE_COMMAND = re.compile('hype (.*)')
 SHOW_PLAYERS = re.compile('show players')
+HYPE_STANDARDS = re.compile('hype_standards')
     
 def init():
 
@@ -37,6 +38,7 @@ def init():
         irc.send(b'USER ' + nick + b' 0 * :' + bot_owner + b'\r\n')
         irc.send(b'NICK ' + nick + b'\r\n')
         irc.send(bytes("JOIN #lcs247\r\n", "UTF-8"));
+        print('[ irc bot ]\t Listening for commands...')
         while True:
             readbuffer = readbuffer+irc.recv(1024).decode("UTF-8")
             temp = str.split(readbuffer, "\n")
@@ -53,11 +55,17 @@ def init():
                         players.hype_personality(player, 1) 
                         personality = players.get_personality(player)
                         message = "{0} hypes {1} to {2}!".format(user, personality['name'], personality['hype'])
+                        print('[ irc bot ]\t {0}'.format(message))
                         send_message(message)
                     
                     show_m = SHOW_PLAYERS.match(message)
                     if show_m:
                         pass
+                    
+                    if user == 'lcs247' and HYPE_STANDARDS.match(message):
+                        print('[ irc bot ]\t {0}'.format("Hyping standard players..."))
+                        players.hype_standards()
+                        
 
             time.sleep(1)
 

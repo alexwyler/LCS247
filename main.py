@@ -64,6 +64,9 @@ def main():
          
         print("[ main ]\t Killing game...")
         league_runner.kill_game()
+        
+        print("[ main ]\t Decaying hype...")
+        
 
 def get_best_suitable_game():
     personalities_by_hype = players.get_personality_names_ordered_by_hype()
@@ -80,7 +83,7 @@ def get_best_suitable_game():
 #                print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
                 continue
         
-            if game.type in GAME_TYPES and config.CONTEXT_UTIL.get("enforce_solo_queue"):
+            if game.type not in GAME_TYPES and config.CONTEXT_UTIL.get("enforce_solo_queue"):
 #                print(personality_name + " game not ranked 5s!")
                 continue
             

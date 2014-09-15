@@ -23,6 +23,16 @@ def lazy_init():
     if not cursor.fetchone():
         init_data()
     
+def decay_hype():
+    conn = get_conn()
+    cursor=conn.cursor()
+    cursor.execute("UPDATE personalities SET hype = max(hype / 2 - 1, 0)")
+    conn.commit()
+    conn.close()
+    
+def hype_standards():
+    for personality_name in PLAYERS:
+        hype_personality(personality_name, 5)
 
 def create_personality(name, region='NA'):
     conn = get_conn()
@@ -157,15 +167,22 @@ lazy_init()
 
 def test():
     print(get_personality('Voyboy'))
-    hype_personality("Voyboy", 1)
+    hype_personality("Voyboy", 5)
     print(get_personality_for_account_name('crs vooby'))
     if not get_personality('grraffe'):
         create_personality('grraffe')
     hype_personality('grraffe', 1)
+    print(get_personality('grraffe'))
     
-    for personality_name in PLAYERS:
-        hype_personality(personality_name, 1)
-        
+    hype_standards()
+    
+    print(get_accounts_with_hype())
+    decay_hype()
+    print(get_personality('Voyboy'))
+    print(get_accounts_with_hype())
+    
+    decay_hype()
+    print(get_personality('Voyboy'))
     print(get_accounts_with_hype())
 
 if __name__ == "__main__":
