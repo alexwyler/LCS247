@@ -54,7 +54,6 @@ def init():
                     m = MESSAGE_PATTERN.match(line)
                     if m:
                         user, message = m.group(1, 4)
-                        print('{0}: {1}'.format(user, message))
                         hype_m = HYPE_COMMAND.search(message)
                         if hype_m:
                             player = hype_m.group(1).strip()
@@ -72,7 +71,7 @@ def init():
                                 send_message("--- Players in Game ---")
                                 for suitable_game in suitable_games:
                                     personality_name, account, score, game = suitable_game
-                                    send_message("({0}) {1} on {2}".format(score, personality_name, game.get_champion(account)))
+                                    send_message("({0}) {1} on {2}".format(score, personality_name, game.get_champion(account[0])))
                             else:
                                 send_message("No players in new games!")
                         
@@ -95,7 +94,7 @@ def init():
     
                 time.sleep(1)
             except Exception as e:
-                print(str(e))
+                log(str(e))
                 traceback.print_exc()
             
         log('Exiting loop!')
