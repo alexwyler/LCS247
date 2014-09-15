@@ -27,7 +27,7 @@ def main():
     init()
     
     while True:
-        print('Searching for suitable games...')
+        print('[ main ]\t Searching for suitable games...')
         while True:
             selected_game_details = get_best_suitable_game()
             if not selected_game_details:
@@ -36,16 +36,16 @@ def main():
                 break
 
         personality_name, account, game = selected_game_details
-        print("Chose {0} game, playing on {1}...".format(personality_name, account))
+        print("[ main ]\t Chose {0} game, playing on {1}...".format(personality_name, account))
         
         team, position = util.get_player_position(account, game)
         team_str = str(team).join(str(team).split()).lower()
         
         if not config.CONTEXT_UTIL.get("skip_launch"):
-            print("Launching game...")
+            print("[ main ]\t Launching game...")
             league_runner.open_game(game, team_str, position)
          
-        print("Waiting for game to end...")
+        print("[ main ]\t Waiting for game to end...")
         while True:
             try:
                 if not api.get_active_game(account): 
@@ -54,10 +54,10 @@ def main():
                 pass
             time.sleep(IN_GAME_PING_FREQUENCY)
          
-        print("Game complete. Waiting for spectator delay...")
+        print("[ main ]\t Game complete. Waiting for spectator delay...")
         time.sleep(SPECTATOR_DELAY)
          
-        print("Killing game...")
+        print("[ main ]\t Killing game...")
         league_runner.kill_game()
 
 def get_best_suitable_game():
@@ -88,7 +88,7 @@ def get_best_suitable_game():
 def update_twitch_channel(player, account, game_info):
     champ_name = champion.get_champion_name_from_game_info(account, game_info)
     title = 'LCS Players 24/7: {0} Playing {1}'.format(player, champ_name)
-    print('Updating twitch stream to: "{0}"...'.format(title))
+    print('[ main ]\t Updating twitch stream to: "{0}"...'.format(title))
     twitch.update_channel_title(title)
 
 if __name__ == "__main__":

@@ -36,17 +36,17 @@ def lookup_account( personality, account ):
             accounts_to_games = ACTIVE_ACCOUNTS[personality_name]
             if game:
                 if account not in accounts_to_games:
-                    print("--- New Game --- " + personality_name )
+                    print("[ search ]\t New game, " + personality_name )
                     accounts_to_games[account] = (account, time.time(), game)
             else:
                 if account in accounts_to_games:
-                    print("--- Deleting Game --- " + personality_name )
+                    print("[ search ]\t Deleting game, " + personality_name )
                     accounts_to_games.pop(account, None)
         finally:
             lock.release()
     except Exception as e:
         pass
-        print('Error looking up game: ' + str(e))
+        print('[ search ]\t Error looking up game: ' + str(e))
         #traceback.print_exc()
 
 #             
