@@ -43,7 +43,7 @@ def main():
         active_games.SEARCH_DELAY = 120
         personality_name, account, _, game = SharedGameDetails.selected_game
         log("Choosing {0} game, playing on {1}...".format(personality_name, account))
-        players.hype_personality(personality_name, 5)
+        players.hype_personality(personality_name, 10)
         
         team, position = util.get_player_position(account[0], game)
         team_str = str(team).join(str(team).split()).lower()
@@ -74,9 +74,12 @@ def main():
         log("Decaying hype...")
         
 def get_best_suitable_game():
-    suitable_games = active_games.get_suitable_games_in_order()
+    suitable_games = active_games.get_potential_games_in_order()
     if suitable_games:
-        return suitable_games[0]
+        for suitable_game in suitable_games:
+            (_, _, score, game) = suitable_game
+            if not game.is_within_spectator_delay() and score > 0:
+                return suitable_game
     else:
         return None
 

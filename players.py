@@ -114,7 +114,7 @@ def get_personality_for_name(name):
 def get_personalities_by_hype():
     conn = get_conn()
     cursor=conn.cursor()
-    cursor.execute("SELECT * FROM personalities WHERE hype > 0 ORDER BY hype DESC")
+    cursor.execute("SELECT * FROM personalities WHERE hype >= 0 ORDER BY hype DESC")
     personalities = cursor.fetchall()
     conn.close()
     return personalities
@@ -122,7 +122,7 @@ def get_personalities_by_hype():
 def get_accounts_with_hype():
     conn = get_conn()
     cursor=conn.cursor()
-    cursor.execute("SELECT a.clean_name, a.region FROM accounts AS a INNER JOIN personalities AS p ON a.personality_name = p.name where p.hype > 0")
+    cursor.execute("SELECT a.clean_name, a.region FROM accounts AS a INNER JOIN personalities AS p ON a.personality_name = p.name where p.hype >= 0")
     accounts = cursor.fetchall()
     conn.close()
     return [(account['clean_name'], account['region']) for account in accounts]

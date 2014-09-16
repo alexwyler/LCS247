@@ -4,6 +4,7 @@ Created on Sep 15, 2014
 @author: alexwyler
 '''
 import util
+import time
 
 class Game:
     
@@ -21,6 +22,12 @@ class Game:
         
     def __str__(self):
         return str(self.__dict__)
+    
+    def is_within_spectator_delay(self):
+        return self.get_time_since_start() < (util.SPECTATOR_DELAY + 30)
+    
+    def get_time_since_start(self):
+        return time.time() - self.start_time
     
     def get_champion(self, account):
         for player_info in self.blue_team + self.purple_team:

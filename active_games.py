@@ -6,7 +6,6 @@ Created on Sep 12, 2014
 import concurrent.futures
 import threading
 import time
-import util
 import datetime
 import config
 import traceback
@@ -114,7 +113,7 @@ def update_runner():
         time.sleep(SEARCH_DELAY)
         
         
-def get_suitable_games_in_order():
+def get_potential_games_in_order():
     personalities_by_hype = players.get_personalities_by_hype()
     suitable_games = []
     lock.acquire()
@@ -125,17 +124,15 @@ def get_suitable_games_in_order():
             if not active_game_info:
                 continue
             (account, _, game) = active_game_info
-            time_since_start = time.time() - game.start_time
-            
-            if time_since_start < util.SPECTATOR_DELAY + 30 or time_since_start > MAX_START_TIME:
-#                print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
-                continue
+            time_since_start = game.get_time_since_start()
         
             if game.type not in GAME_TYPES and config.CONTEXT_UTIL.get("enforce_solo_queue"):
 #                print(personality_name + " game not ranked 5s!")
                 continue
             
-            suitable_games.append((personality_name, account, personality['hype'], game))
+            score = personality['hype'] - max(int((time_since_start - 10 * 60) / 60), 0)
+            
+            suitable_games.append((personality_name, account, score, game))
             
     finally:
         lock.release()
