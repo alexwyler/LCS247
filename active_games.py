@@ -135,7 +135,7 @@ def get_potential_games_in_order():
     finally:
         lock.release()
     
-    return suitable_games        
+    return sorted(suitable_games, key=lambda x: -x[2])
 
 def log(message):
     plog.log('search', message)
