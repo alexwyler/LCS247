@@ -22,7 +22,9 @@ def init():
     config.read( CONFIG_FILE_PATH )
     for section in config.sections():
         init_sction_map(section, config)
+    print(config)
+    
+init();
 
-# if __name__ == "__main__":
-#     init();
-#    USAGE: CONTEXT_UTIL['ahk_path']
+if __name__ == "__main__":
+    print(CONTEXT_UTIL['ahk_path'])

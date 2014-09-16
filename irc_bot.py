@@ -6,6 +6,8 @@ import active_games
 import traceback
 import re
 import plog
+import subprocess
+import config
  
 # sets variables for connection to twitch chat
 bot_owner = b'LCS247'
@@ -17,8 +19,9 @@ MESSAGE_PATTERN = re.compile(':(.*)!(.*)@(.*).tmi.twitch.tv PRIVMSG #lcs247 :(.*
 HYPE_COMMAND = re.compile('hype ([^,]*)(,(.*))?', re.IGNORECASE)
 SHOW_PLAYERS = re.compile('show players', re.IGNORECASE)
 HYPE_STANDARDS = re.compile('hype_standards', re.IGNORECASE)
-SKIP_COMMAND = re.compile('skip|booo*', re.IGNORECASE)
-    
+SKIP_COMMAND = re.compile('(skip)|(booo*)', re.IGNORECASE)
+NEXT_SONG_COMMAND = re.compile('next_song', re.IGNORECASE)
+
 def init(SharedGameDetails):
 
     def process():
@@ -75,6 +78,12 @@ def init(SharedGameDetails):
                         if user == 'lcs247' and HYPE_STANDARDS.search(message):
                             log('Hyping standard players...')
                             players.hype_standards()
+                        
+                        if user == 'lcs247' and NEXT_SONG_COMMAND.search(message):
+                            log('SKipping song...')
+                            send_message('Skipping song...')
+                            subprocess.call([config.CONTEXT_UTIL['ahk_path'],
+                                             config.CONTEXT_UTIL['ahk_next_song_path']])
                             
                         if (SKIP_COMMAND.search(message)):
                             selected_game_details = SharedGameDetails.selected_game
