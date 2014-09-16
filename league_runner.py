@@ -13,8 +13,8 @@ import config
 MAC_LOL_VERSION = "0.0.0.133"
 MAC_LOL_CLIENT_VERSION = "0.0.0.144"
 
-PC_LOL_VERSION = "0.0.1.54"
-PC_LOL_CLIENT_VERSION = "0.0.1.54"
+PC_LOL_VERSION = "0.0.1.55"
+PC_LOL_CLIENT_VERSION = "0.0.1.55"
 
 def kill_game():
     if platform.system() != 'Darwin':
@@ -67,8 +67,7 @@ def startAutohotkey( is_team_1, index):
     pass
 
 def open_game_pc(game, team_str, position):
-    os.chdir(r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.54\deploy")
-    
+    os.chdir(r"C:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\{0}\deploy".format(PC_LOL_VERSION))
     def open_game(game):
         ip_and_port = str(game.server) + ':' + str(game.port)
         encryption_key = game.key
