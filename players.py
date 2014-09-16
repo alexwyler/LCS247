@@ -129,7 +129,7 @@ def get_accounts_with_hype():
     
 PLAYERS = collections.OrderedDict()
 
-PLAYERS['Imaqtpie'] = ['Imaqtpie', 'qtpie', 'Zstinkloser430Z', 'LMQ Tc Tabe', 'Jessica Lynn', 'adsafadfdsafdasf']
+PLAYERS['Imaqtpie'] = ['Imaqtpie', 'qtpie', 'Zstinkloser430Z', 'LMQ Tc Tabe', 'adsafadfdsafdasf']
 PLAYERS['Shiptur'] = ['Shiphtur', 'mMe Shiphtur', 'Chapanya', 'CST Shiponya', 'Pawn Dog', 'Apdo Dog']
 PLAYERS['Voyboy'] = ['Voyboy', 'Crs Vooby', 'Crs Voyboy', 'Nihilmatic']
 PLAYERS['Dexter'] = ['dexter', 'GoldPoro2', 'LDdexter', 'OPOP174AMHA195', 'CIJL963PFPA447B', 'CLGsavior', 'CHIMPERATOR']
