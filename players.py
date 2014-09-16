@@ -159,9 +159,9 @@ PLAYERS['Cop'] = ['Cop', 'Crs Cop', 'v8 Cop', 'EU Cop', 'David Roberson', 'KingW
 PLAYERS['XPecial'] = ['Xpecial', 'TSM Xpec']
 PLAYERS['Dyrus'] = ['Dyrus', 'Insert Smurf Here', 'I DIED TO WOLVES', 'superpaladin98', ('suryd', 'KR'), ('TSM suryD', 'KR'), ('WORST CALLS NA', 'EUW'), ('1 800 MICROWAVE', 'EUW'), ('WORST CALLS LOL', 'EUW')]
 PLAYERS['Amazing'] = ['Amazing', 'AmaZiinG94', 'AL Amazing', 'Acer Amazing', 'p Amazing', ('CW Amazing', 'EUW'), 'TSM Amazingprox', ('TSM Amazingx', 'KR')]
-PLAYERS['Bjergsen'] = ['Bjergsen', 'I am BjergerKing', 'Bjerg', 'magickiller45', 'BJ3RGR1F1C', 'NiP Bjergsen', 'NiP Derpsen', u'BJÖRGSEN', 'mcdonalds185', 'King Bjergsen NA', 'DIG Chapanya', ('TSM Bjergtheking', 'EUW'), 'Rust', 'Kingmidmidmid', 'Bjergermelon', ('TSM BjergsenMid', 'KR')]
+PLAYERS['Bjergsen'] = ['Bjergsen', 'I am BjergerKing', 'Bjerg', 'magickiller45', 'BJ3RGR1F1C', 'NiP Bjergsen', 'NiP Derpsen', 'mcdonalds185', 'King Bjergsen NA', 'DIG Chapanya', ('TSM Bjergtheking', 'EUW'), 'Rust', 'Kingmidmidmid', 'Bjergermelon', ('TSM BjergsenMid', 'KR')]
 PLAYERS['WildTurtle'] = ['WildTurtle', 'TSM CAT', 'Turtle the Cat', 'kT Turtle', 'Quantic Turtle', 'Leaf Turtle', 'WildTurtl', ('YuNg TuRtLe', 'KR')]
-PLAYERS['LustBoy'] = ['LustBoy', ('CJ Entus 장식', 'KR'), ('Azubu B Lustboy', 'KR'), ('MiG Lustboy', 'KR'), 'Lustnation', ('AKA The Reason', 'KR')]
+PLAYERS['LustBoy'] = [('CJ Entus 장식', 'KR'), ('Azubu B Lustboy', 'KR'), ('MiG Lustboy', 'KR'), 'Lustnation', ('AKA The Reason', 'KR')]
 
 PLAYERS['DaBox'] = ['dabox']
 PLAYERS['Annie Bot'] = ['anniebot']

@@ -13,35 +13,37 @@ import active_games
 import config
 import players
 import plog
+import traceback
 
 IN_GAME_PING_FREQUENCY = 5
 START_TIME = time.time()
-SELECTED_GAME_DETAILS = None
+
+class SharedGameDetails:
+    selected_game = None
 
 def init():
     config.init()
-    irc_bot.init()
+    irc_bot.init(SharedGameDetails)
     active_games.init()
 
 def main():
     init()
-    
     while True:
         log('Waiting for a suitable game...')
         # reduce search delay while we search for new games
         active_games.SEARCH_DELAY = 10
         while True:
-            SELECTED_GAME_DETAILS = get_best_suitable_game()
-            if not SELECTED_GAME_DETAILS:
+            SharedGameDetails.selected_game = get_best_suitable_game()
+            if not SharedGameDetails.selected_game:
                 time.sleep(1)
             else:
                 break
 
         # increase search delay while we have a game
         active_games.SEARCH_DELAY = 120
-        personality_name, account, _, game = SELECTED_GAME_DETAILS
+        personality_name, account, _, game = SharedGameDetails.selected_game
         log("Choosing {0} game, playing on {1}...".format(personality_name, account))
-        players.hype_personality(personality_name, 10)
+        players.hype_personality(personality_name, 5)
         
         team, position = util.get_player_position(account[0], game)
         team_str = str(team).join(str(team).split()).lower()
@@ -54,14 +56,17 @@ def main():
         log("Waiting for game to end...")
         while True:
             try:
-                if not api.get_active_game(account):
+                if not api.get_active_game(account[0]) or not SharedGameDetails.selected_game:
                     break
-            except Exception:
+            except Exception as e:
+                log(str(e))
+                traceback.print_exc()
                 pass
             time.sleep(IN_GAME_PING_FREQUENCY)
-         
-        log("Game complete. Waiting for spectator delay...")
-        time.sleep(util.SPECTATOR_DELAY)
+        
+        if SharedGameDetails.selected_game:
+            log("Game complete. Waiting for spectator delay...")
+            time.sleep(util.SPECTATOR_DELAY)
          
         log("Killing game...")
         league_runner.kill_game()

@@ -127,7 +127,7 @@ def get_suitable_games_in_order():
             (account, _, game) = active_game_info
             time_since_start = time.time() - game.start_time
             
-            if time_since_start < util.SPECTATOR_DELAY or time_since_start > MAX_START_TIME:
+            if time_since_start < util.SPECTATOR_DELAY + 30 or time_since_start > MAX_START_TIME:
 #                print(personality_name + " game not close enough to start! " + str(time_since_start / 60) + " minutes in.")
                 continue
         
