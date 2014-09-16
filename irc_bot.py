@@ -13,20 +13,11 @@ nick = b'LCS247'
 server = b'irc.twitch.tv'
 password = b'oauth:qgom5va0n9l2gim7kb5fzzer3xpvqmi'
  
-queue = 0  # sets variable for anti-spam queue functionality
- 
-# sets variables for !add and !news commands
-command = '!notset'
-cmdmsg = 'This command is not set yet'
-newsmsg = 'No news set'
-
 MESSAGE_PATTERN = re.compile(':(.*)!(.*)@(.*).tmi.twitch.tv PRIVMSG #lcs247 :(.*)', re.IGNORECASE)
-
-HYPE_COMMAND = re.compile('hype ([^,]*)(,(.*))?')
-SHOW_PLAYERS = re.compile('show players')
-HYPE_STANDARDS = re.compile('hype_standards')
-SKIP_COMMAND = re.compile('skip')
-
+HYPE_COMMAND = re.compile('hype ([^,]*)(,(.*))?', re.IGNORECASE)
+SHOW_PLAYERS = re.compile('show players', re.IGNORECASE)
+HYPE_STANDARDS = re.compile('hype_standards', re.IGNORECASE)
+SKIP_COMMAND = re.compile('skip|booo*', re.IGNORECASE)
     
 def init(SharedGameDetails):
 
