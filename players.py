@@ -162,6 +162,7 @@ PLAYERS['Amazing'] = ['Amazing', 'AmaZiinG94', 'AL Amazing', 'Acer Amazing', 'p 
 PLAYERS['Bjergsen'] = ['Bjergsen', 'I am BjergerKing', 'Bjerg', 'magickiller45', 'BJ3RGR1F1C', 'NiP Bjergsen', 'NiP Derpsen', 'mcdonalds185', 'King Bjergsen NA', 'DIG Chapanya', ('TSM Bjergtheking', 'EUW'), 'Rust', 'Kingmidmidmid', 'Bjergermelon', ('TSM BjergsenMid', 'KR')]
 PLAYERS['WildTurtle'] = ['WildTurtle', 'TSM CAT', 'Turtle the Cat', 'kT Turtle', 'Quantic Turtle', 'Leaf Turtle', 'WildTurtl', ('YuNg TuRtLe', 'KR')]
 PLAYERS['LustBoy'] = [('CJ Entus 장식', 'KR'), ('Azubu B Lustboy', 'KR'), ('MiG Lustboy', 'KR'), 'Lustnation', ('AKA The Reason', 'KR')]
+PLAYERS['Saintvicious'] = ['Saintvicious', 'Crs Stvicious', 'shyro', 'Crs Geova', 'brownislame', 'Crs Vicious', 'Crs SantaVicious']
 PLAYERS['Bubbadub'] = ['coL Bubbadub']
 PLAYERS['Westrice'] = ['coL Westrice']
 PLAYERS['Jintae'] = ['Jintae']
