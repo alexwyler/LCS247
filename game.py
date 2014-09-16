@@ -5,6 +5,7 @@ Created on Sep 15, 2014
 '''
 import util
 import time
+import datetime
 
 class Game:
     
@@ -28,6 +29,9 @@ class Game:
     
     def get_time_since_start(self):
         return time.time() - self.start_time
+    
+    def get_timestamp_since_start(self):
+        return str(datetime.timedelta(seconds=int(int(time.time() - self.start_time))))
     
     def get_champion(self, account):
         for player_info in self.blue_team + self.purple_team:

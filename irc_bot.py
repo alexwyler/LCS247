@@ -76,7 +76,7 @@ def init(SharedGameDetails):
                                         waiting = ', waiting to begin'
                                     else:
                                         waiting = ''
-                                    message = "({0}{3}) {1} on {2}".format(score, personality_name, game.get_champion(account[0]), waiting)
+                                    message = "({0}{3}) {1} on {2} {4}".format(score, personality_name, game.get_champion(account[0]), waiting, game.get_timestamp_since_start())
                                     send_message(message)
                             else:
                                 send_message("No potential games!")
