@@ -1,0 +1,276 @@
+scenes : {
+  LEAGUE : {
+    class : Scene
+    sources : {
+      Music : {
+        render : 1
+        class : TextSource
+        data : {
+          baseSizeCX : 300
+          baseSizeCY : 300
+          font : Roboto Lt
+          color : -1
+          fontSize : 30
+          textOpacity : 100
+          scrollSpeed : 0
+          bold : 0
+          italic : 0
+          vertical : 0
+          wrap : 1
+          scrollMode : 1
+          underline : 0
+          pointFiltering : 0
+          backgroundColor : -16777216
+          backgroundOpacity : 0
+          useOutline : 1
+          outlineColor : -16777216
+          outlineSize : 2
+          outlineOpacity : 100
+          useTextExtents : 1
+          extentWidth : 300
+          extentHeight : 300
+          align : 0
+          file : "C:\\Users\\Aleeeeeeeesa\\Documents\\GitHub\\LCS247\\Snip\\Snip.txt"
+          text : "C:\\Users\\Aleeeeeeeesa\\Documents\\GitHub\\LCS247\\Snip\\Snip.txt"
+          mode : 1
+        }
+        cx : 294
+        cy : 294
+        x : 1305
+        y : 773
+        crop.left : 0
+        crop.top : 0
+        crop.right : 0
+        crop.bottom : 0
+      }
+      Next Games : {
+        render : 1
+        class : TextSource
+        data : {
+          baseSizeCX : 400
+          baseSizeCY : 140
+          font : Arial
+          color : -1
+          fontSize : 30
+          textOpacity : 100
+          scrollSpeed : 0
+          bold : 0
+          italic : 0
+          vertical : 0
+          wrap : 1
+          scrollMode : 0
+          underline : 0
+          pointFiltering : 0
+          backgroundColor : -16777216
+          backgroundOpacity : 0
+          useOutline : 1
+          outlineColor : -16777216
+          outlineSize : 2
+          outlineOpacity : 100
+          useTextExtents : 1
+          extentWidth : 400
+          extentHeight : 140
+          align : 2
+          file : "C:\\Users\\Aleeeeeeeesa\\Documents\\GitHub\\LCS247\\obs\\potential_games.txt"
+          text : "Aphomoo in game for 5 minutes\r\nAphomoo in game for 5 minutes\r\nAphomoo in game for 5 minutes\r\nAphromoo in game for 15 minutes\r\n"
+          mode : 1
+        }
+        cx : 423
+        cy : 148
+        x : 1497
+        y : 622
+        crop.left : 0
+        crop.top : 0
+        crop.right : 0
+        crop.bottom : 0
+      }
+      Donator : {
+        render : 0
+        class : TextSource
+        data : {
+          baseSizeCX : 583.426
+          baseSizeCY : 98.0156
+          font : Roboto
+          color : -1
+          fontSize : 48
+          textOpacity : 100
+          scrollSpeed : 0
+          bold : 0
+          italic : 0
+          vertical : 0
+          wrap : 0
+          scrollMode : 0
+          underline : 0
+          pointFiltering : 0
+          backgroundColor : -16777216
+          backgroundOpacity : 0
+          useOutline : 1
+          outlineColor : -16777216
+          outlineSize : 2
+          outlineOpacity : 100
+          useTextExtents : 0
+          extentWidth : 100
+          extentHeight : 100
+          align : 0
+          file : 
+          text : "Top donator of the Month: \r\nTossum_zzz_master_glorf____zz"
+          mode : 0
+        }
+        cx : 583.344
+        cy : 98.0156
+        x : 1336
+        y : 0
+        crop.left : 0
+        crop.top : 0
+        crop.right : 0
+        crop.bottom : 0
+      }
+      Player and Champ : {
+        render : 1
+        class : TextSource
+        data : {
+          baseSizeCX : 374.031
+          baseSizeCY : 50.0078
+          font : Roboto
+          color : -1
+          fontSize : 48
+          textOpacity : 100
+          scrollSpeed : 0
+          bold : 0
+          italic : 0
+          vertical : 0
+          wrap : 0
+          scrollMode : 0
+          underline : 0
+          pointFiltering : 0
+          backgroundColor : -16777216
+          backgroundOpacity : 0
+          useOutline : 1
+          outlineColor : -16777216
+          outlineSize : 2
+          outlineOpacity : 100
+          useTextExtents : 0
+          extentWidth : 100
+          extentHeight : 100
+          align : 0
+          file : "C:\\Users\\Aleeeeeeeesa\\Documents\\GitHub\\LCS247\\obs\\now_playing.txt"
+          text : "Voyboy playing Akali\r\n"
+          mode : 1
+        }
+        cx : 374.125
+        cy : 50
+        x : 14
+        y : 11
+        crop.left : 0
+        crop.top : 0
+        crop.right : 0
+        crop.bottom : 0
+      }
+      Image : {
+        render : 1
+        class : BitmapImageSource
+        data : {
+          path : "C:\\Users\\Aleeeeeeeesa\\Desktop\\bg raaw.png"
+          opacity : 100
+          color : -1
+          useColorKey : 0
+          keyColor : -1
+          keySimilarity : 10
+          keyBlend : 0
+          monitor : 0
+        }
+        cx : 1920
+        cy : 1080
+        x : 0
+        y : 0
+        crop.left : 0
+        crop.top : 0
+        crop.right : 0
+        crop.bottom : 0
+      }
+      lol : {
+        render : 1
+        class : GraphicsCapture
+        data : {
+          window : "[League of Legends]: League of Legends (TM) Client"
+          windowClass : RiotWindowClass
+          executable : league of legends.exe
+          stretchImage : 0
+          ignoreAspect : 0
+          captureMouse : 1
+          invertMouse : 0
+          safeHook : 0
+          useHotkey : 0
+          hotkey : 123
+          gamma : 100
+        }
+        cx : 1920
+        cy : 1080
+      }
+    }
+  }
+  standby : {
+    class : Scene
+    sources : {
+      Next Games : {
+        render : 1
+        class : TextSource
+        data : {
+          baseSizeCX : 350
+          baseSizeCY : 800
+          font : Roboto Lt
+          color : -1
+          fontSize : 40
+          textOpacity : 100
+          scrollSpeed : 0
+          bold : 0
+          italic : 0
+          vertical : 0
+          wrap : 1
+          scrollMode : 0
+          underline : 0
+          pointFiltering : 0
+          backgroundColor : -16777216
+          backgroundOpacity : 0
+          useOutline : 1
+          outlineColor : -16777216
+          outlineSize : 8
+          outlineOpacity : 100
+          useTextExtents : 1
+          extentWidth : 350
+          extentHeight : 800
+          align : 2
+          file : "C:\\Users\\Aleeeeeeeesa\\Documents\\GitHub\\LCS247\\obs\\potential_games.txt"
+          text : 
+          mode : 1
+        }
+        cx : 350
+        cy : 800
+        x : 1569
+        y : 0
+        crop.left : 0
+        crop.top : 0
+        crop.right : 0
+        crop.bottom : 0
+      }
+      bg : {
+        render : 1
+        class : BitmapImageSource
+        data : {
+          path : "C:\\Users\\Aleeeeeeeesa\\Documents\\GitHub\\LCS247\\assets\\loading2.jpg"
+          opacity : 100
+          color : -1
+          useColorKey : 0
+          keyColor : -1
+          keySimilarity : 10
+          keyBlend : 0
+          monitor : 0
+        }
+        cx : 1920
+        cy : 1079
+        x : 0
+        y : 1
+      }
+    }
+  }
+}
