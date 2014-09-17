@@ -23,7 +23,7 @@ class SharedGameDetails:
     selected_game = None
 
 def init():
-    irc_bot.init(SharedGameDetails, config)
+    irc_bot.init(SharedGameDetails)
     active_games.init()
 
 def main():
