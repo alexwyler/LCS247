@@ -3,4 +3,4 @@ __pycache__/
 *.db
 config.properties
 .DS_Store
-now_playing.txt
+obs/*.txt

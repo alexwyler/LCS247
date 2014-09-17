@@ -22,7 +22,6 @@ def init():
     config.read( CONFIG_FILE_PATH )
     for section in config.sections():
         init_sction_map(section, config)
-    print(config)
     
 init();
 

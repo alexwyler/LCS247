@@ -13,7 +13,7 @@ import active_games
 import config
 import players
 import plog
-import os
+import obs
 import traceback
 
 IN_GAME_PING_FREQUENCY = 5
@@ -25,7 +25,8 @@ class SharedGameDetails:
 def init():
     irc_bot.init(SharedGameDetails)
     active_games.init()
-
+    obs.init()
+    
 def main():
     init()
     while True:
@@ -53,7 +54,7 @@ def main():
             league_runner.open_game(game, team_str, position)
         
         update_twitch_channel(personality_name, account, game)
-        update_obs_now_playing(personality_name, account, game)
+        obs.update_now_playing(personality_name, account, game)
         log("Waiting for game to end...")
         while True:
             try:
@@ -83,14 +84,6 @@ def get_best_suitable_game():
                 return suitable_game
     else:
         return None
-
-def update_obs_now_playing(player, account, game):
-    champ_name = game.get_champion(account[0])
-    now_playing = '{0} Playing {1}'.format(player, champ_name)
-    log('Updating now playing to: "{0}"...'.format(now_playing))
-    f = open(os.path.join('obs', 'now_playing.txt'), 'w')
-    f.write(now_playing)
-    f.close()
 
 def update_twitch_channel(player, account, game):
     champ_name = game.get_champion(account[0])
