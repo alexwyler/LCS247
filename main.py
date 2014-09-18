@@ -11,7 +11,6 @@ import api
 import util
 import active_games
 import config
-import os
 import players
 import plog
 import traceback
@@ -23,7 +22,6 @@ class SharedGameDetails:
     selected_game = None
 
 def init():
-    os.environ['TZ'] = 'US/Central'
     config.init()
     irc_bot.init(SharedGameDetails)
     active_games.init()
